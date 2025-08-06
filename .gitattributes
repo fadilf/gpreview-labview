@@ -1,0 +1,33 @@
+# all LabVIEW file types
+*.lvproj -merge -text
+*.vi binary
+*.ctl binary
+*.vim binary
+*.lvclass -merge -text
+*.ctt binary
+*.llb binary
+*.lvlib -merge -text
+*.lvlibp binary
+*.xctl binary
+*.vit binary
+*.xnode binary
+*.xcontrol binary
+*.rtm binary
+
+# TDMS files (which shouldn't ever be committed, but just in case)
+*.tdms filter=lfs diff=lfs -merge -text
+# JKI package file types
+*.vipc filter=lfs diff=lfs -merge -text
+*.vip filter=lfs diff=lfs -merge -text
+
+# Other common file types
+*.pdf filter=lfs diff=lfs -merge -text
+*.jpg filter=lfs diff=lfs -merge -text
+*.png filter=lfs diff=lfs -merge -text
+*.bin filter=lfs diff=lfs -merge -text
+*.ico filter=lfs diff=lfs -merge -text
+*.exe filter=lfs diff=lfs -merge -text
+*.seq filter=lfs diff=lfs -merge -text
+*.bmp filter=lfs diff=lfs -merge -text
+*.doc filter=lfs diff=lfs -merge -text
+*.docx filter=lfs diff=lfs -merge -text
