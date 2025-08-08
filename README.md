@@ -7,6 +7,8 @@ Examples of interactive previews:
 - [ControllerWorkerPattern 1.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/ControllerWorkerPattern%201.html)
 - [Many Nested Cases.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/Many%20Nested%20Cases.html)
 
+This tool can also be used as [VS Code extension](https://marketplace.visualstudio.com/items?itemName=fadil.gpreview) for convenience.
+
 ## Usage
 `LabVIEWCLI -OperationName RunVI -PortNumber <port number> -VIPath <path to CLI.vi> <path to target VI file> <name of output HTML file> [Port Number]`
 
