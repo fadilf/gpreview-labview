@@ -16,8 +16,8 @@
 		</Item>
 		<Item Name="CLI.vi" Type="VI" URL="../CLI.vi"/>
 		<Item Name="Directory.vi" Type="VI" URL="../Directory.vi"/>
+		<Item Name="Image to PNG Data URI.vi" Type="VI" URL="../Image to PNG Data URI.vi"/>
 		<Item Name="VI Data Extractor.vi" Type="VI" URL="../VI Data Extractor.vi"/>
-		<Item Name="Write TMP PNG.vi" Type="VI" URL="../Write TMP PNG.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Base64 Support.lvlib" Type="Library" URL="/&lt;vilib&gt;/JDP Science/JDP Science Common Utilities/Base64/Base64 Support.lvlib"/>

@@ -8,8 +8,8 @@ Examples of interactive previews:
 - [Many Nested Cases.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/Many%20Nested%20Cases.html)
 
 ## Usage
-`LabVIEWCLI -OperationName RunVI -PortNumber <port number> -VIPath <path to CLI.vi> <path to target VI file> <name of output HTML file>`
+`LabVIEWCLI -OperationName RunVI -PortNumber <port number> -VIPath <path to CLI.vi> <path to target VI file> <name of output HTML file> [Port Number]`
 
 Example usage:
 
-`LabVIEWCLI -OperationName RunVI -PortNumber 3364 -VIPath .\CLI.vi "C:\...\Test Cases\ControllerWorkerPattern 1.vi" "C:\...\Test Cases\ControllerWorkerPattern 1.html"`
+`LabVIEWCLI -OperationName RunVI -PortNumber 3364 -VIPath .\CLI.vi "C:\...\Test Cases\ControllerWorkerPattern 1.vi" "C:\...\Test Cases\ControllerWorkerPattern 1.html" 3363`
