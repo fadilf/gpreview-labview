@@ -4,6 +4,8 @@
 
 Allows you to "print" VI files into interactive HTML files with browsable multi-frame structures like case structures and event structures.
 
+**Source is saved for LabVIEW 2019.**
+
 Examples of interactive previews:
 - [VI Data Extractor.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/VI%20Data%20Extractor.html)
 - [ControllerWorkerPattern.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/ControllerWorkerPattern.html)
