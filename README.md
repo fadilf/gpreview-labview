@@ -1,10 +1,12 @@
 # GPreview LabVIEW
 
+![GPreview VS Code Demo](media/LVDemo.webp)
+
 Allows you to "print" VI files into interactive HTML files with browsable multi-frame structures like case structures and event structures.
 
 Examples of interactive previews:
-- [Almost Blank.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/Almost%20Blank.html)
-- [ControllerWorkerPattern 1.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/ControllerWorkerPattern%201.html)
+- [VI Data Extractor.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/VI%20Data%20Extractor.html)
+- [ControllerWorkerPattern.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/ControllerWorkerPattern.html)
 - [Many Nested Cases.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/Many%20Nested%20Cases.html)
 
 This tool can also be used as [VS Code extension](https://marketplace.visualstudio.com/items?itemName=fadil.gpreview) for convenience.
