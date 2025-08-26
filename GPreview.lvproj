@@ -17,6 +17,7 @@
 		</Item>
 		<Item Name="CLI.vi" Type="VI" URL="../CLI.vi"/>
 		<Item Name="Directory.vi" Type="VI" URL="../Directory.vi"/>
+		<Item Name="Get VI Info Data.vi" Type="VI" URL="../Get VI Info Data.vi"/>
 		<Item Name="Image to PNG Data URI.vi" Type="VI" URL="../Image to PNG Data URI.vi"/>
 		<Item Name="VI Data Extractor.vi" Type="VI" URL="../VI Data Extractor.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
@@ -33,6 +34,7 @@
 				<Item Name="LVBoundsTypeDef.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVBoundsTypeDef.ctl"/>
 				<Item Name="LVMapReplaceAction.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVMapReplaceAction.ctl"/>
 				<Item Name="LVPositionTypeDef.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/miscctls.llb/LVPositionTypeDef.ctl"/>
+				<Item Name="Normalize End Of Line.vi" Type="VI" URL="/&lt;vilib&gt;/AdvancedString/Normalize End Of Line.vi"/>
 				<Item Name="Search and Replace Pattern.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Search and Replace Pattern.vi"/>
 				<Item Name="TRef Traverse.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/traverseref.llb/TRef Traverse.vi"/>
 				<Item Name="TRef TravTarget.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/traverseref.llb/TRef TravTarget.ctl"/>
