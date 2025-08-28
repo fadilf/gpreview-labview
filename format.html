@@ -28,7 +28,7 @@
         if (rawData["FP"]["Image"] === "") {
             $fpContainer.innerHTML = "Front Panel is empty"
         } else {
-            $fpContainer.innerHTML = `<img src="${rawData["FP"]["Image"]}" height="${rawData["FP"]["Height"]}" width="${rawData["FP"]["Width"]}" />`;
+            $fpContainer.innerHTML = `<img src="${rawData["FP"]["Image"]}" style="display:block;min-height:${rawData["FP"]["Bounds"]["Height"]}px;min-width:${rawData["FP"]["Bounds"]["Width"]}px" />`;
         }
 
         let structureMap = {}
