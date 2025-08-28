@@ -7,7 +7,7 @@ Allows you to "print" VI files into interactive HTML files with browsable multi-
 **Source is saved for LabVIEW 2019.**
 
 Examples of interactive previews:
-- [VI Data Extractor.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/VI%20Data%20Extractor.html)
+- [VI Data to JSON.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/VI%20Data%20to%20JSON.html)
 - [ControllerWorkerPattern.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/ControllerWorkerPattern.html)
 - [Many Nested Cases.vi](https://htmlpreview.github.io/?https://github.com/fadilf/gpreview-labview/blob/main/Test%20Cases/Many%20Nested%20Cases.html)
 
