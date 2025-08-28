@@ -24,12 +24,11 @@
     </div>
     <script>
         $fpContainer = document.getElementById("fp-container");
+        $fpContainer.style.backgroundColor = "#" + rawData["FP"]["Color"];
         if (rawData["FP"]["Image"] === "") {
             $fpContainer.innerHTML = "Front Panel is empty"
         } else {
-            $fpContainer.style.backgroundImage = `url(${rawData["FP"]["Image"]})`;
-            $fpContainer.style.height = rawData["FP"]["Bounds"]["Height"] + "px";
-            $fpContainer.style.width = rawData["FP"]["Bounds"]["Width"] + "px";
+            $fpContainer.innerHTML = `<img src="${rawData["FP"]["Image"]}" height="${rawData["FP"]["Height"]}" width="${rawData["FP"]["Width"]}" />`;
         }
 
         let structureMap = {}
@@ -67,7 +66,8 @@
                 "left": structureData["Position"]["Left"] - parentPosition["left"],
                 "width": structureData["Bounds"]["Width"],
                 "height": structureData["Bounds"]["Height"],
-                "diagrams": diagrams
+                "diagrams": diagrams,
+                "defaultFrame": structureData["Default Frame"]
             }
         }
         rawData["Structure to Diagram"].forEach(item => {
@@ -80,12 +80,13 @@
         function printStructures(structures) {
             let output = "";
             structures.forEach((structure) => {
+                let defaultFrame = structure["defaultFrame"];
                 output += `<div class="structure" 
                 style="top:${structure.top}px; left:${structure.left}px; width:${structure.width}px; height:${structure.height}px" 
                 data-diagrams="${structure.diagrams.length}"
-                data-index="0">`;
+                data-index="${defaultFrame}">`;
                 structure.diagrams.forEach((diagram, index) => {
-                    output += `<div class="diagram${(index == 0) ? ' visible' : ''}" 
+                    output += `<div class="diagram${(index == defaultFrame) ? ' visible' : ''}" 
                     style="background-image:url(${diagram.image}); width:${structure.width}px; height:${structure.height}px">`;
                     output += printStructures(diagram.structures);
                     output += '</div>';
@@ -180,6 +181,14 @@
             position: absolute;
         }
 
+        #fp-container {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         #bd-container {
             position: absolute;
         }
@@ -220,7 +229,8 @@
         }
 
         #fp-container,
-        #bd-container {
+        #bd-container,
+        #vi-info-container {
             display: none;
         }
 
@@ -247,10 +257,6 @@
 
         #tab-container[data-tab=vi-info] #switcher::before {
             left: 80px;
-        }
-
-        #vi-info-container {
-            display: none;
         }
 
         .border {
