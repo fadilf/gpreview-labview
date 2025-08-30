@@ -1,45 +1,149 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+    <style>.structure {
+    position: absolute;
+    overflow-y: hidden;
+    cursor: pointer;
+}
+
+.diagram {
+    display: none;
+}
+
+.diagram.visible {
+    display: block;
+}
+
+.structure:hover {
+    box-shadow: 2px 2px 8px -4px #000;
+    transition: 0.2s;
+}
+
+#top-level-diagram {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#top-level-diagram>div {
+    position: absolute;
+}
+
+#fp-container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#bd-container {
+    position: absolute;
+}
+
+#switcher {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background-color: #c8c8c8d4;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+#switcher::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #333;
+    border-radius: 5px;
+    transition: .3s;
+    left: 0;
+}
+
+#switcher button {
+    box-sizing: border-box;
+    border: 0;
+    background-color: transparent;
+    padding: 5px 7px;
+    font-size: 15px;
+    line-height: 23px;
+    display: inline-block;
+    height: 32px;
+    width: 40px;
+    cursor: pointer;
+}
+
+#fp-container,
+#bd-container,
+#vi-info-container {
+    display: none;
+}
+
+#tab-container {
+    color: #292929;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tab-container[data-tab=fp] #fp-container {
+    display: block;
+}
+
+#tab-container[data-tab=bd] #bd-container {
+    display: block;
+}
+
+#tab-container[data-tab=bd] #switcher::before {
+    left: 40px;
+}
+
+#tab-container[data-tab=vi-info] #vi-info-container {
+    display: block;
+}
+
+#tab-container[data-tab=vi-info] #switcher::before {
+    left: 80px;
+}
+
+.border {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+
+.border-top {
+    height: 1px;
+    bottom: auto;
+}
+
+.border-left {
+    width: 1px;
+    right: auto;
+}
+
+.border-bottom {
+    height: 1px;
+    top: auto;
+}
+
+.border-right {
+    width: 1px;
+    left: auto;
+}</style>
+</head>
+
 <body>
-    <script>
-        var rawData = {"Structure to Diagram":[],"Diagram to Structure":[],"FP":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"E2E2E2","Image":""},"BD":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"FFFFFF","Image":""},"Metadata":{"Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHsAAAA6CAIAAAAfobHhAAADhklEQVR42u3asavUMBwH8PwJ+h/4Jzh3cugf4OYqDtmcbxQE4QaFLiIPBBenp/AGocsNiqudBAe5QVxddBHcaq6/Jv3ll6RNr733bviGUNpek0s++SXpO55SJ04tkp9OiwJxiJ+T+CnWDYhPiG8z0m63M8emuaDjbYgvFJ+MaCGOGF9DvFTqsju6xO4Y8bIsm6bpjhBfRfxSDUelxB0jbqBdxqqyWLxkviULcHunE6cAbxDja4gnoN0dWlXa5gKrynriscXE3YH4Kd9Vwi1UYVW5ibdDvnNCfJH4Li+RtdbKZIgvEufBO5kNtylE7hA/Xpz2Q57FHfMcZRKnnHKH+IS4wVVqw4kPryXdfWctYtzWEHeH+HSMm+1TRLQ4EeLsF8TBvZ8HEJ8U79JmQAxOeEKMLxW311t+IU668dh2eYN1fB1xYvXQB+4tfwzvKquJE67w9YbBio9YQ3yeuL+GbIT+rNpBPEN8ldpBDHGIQxziEIc4xCEOcYiPiuO/ma9VHAQQhzgSxCGOBHGII0Ec4hBHgjjEkU4n/vDDK0itKX7rxSP17IHI5iY98ebrJ3NpjsBaTTzkpvzjzy8T3e4yFenuPzspF5X9oPYvbySl2rBvC9NanShFn6pW17YabS+P6JRfZEw8M8YP4oVpZNfUqnPXZyleM8Q8cdevaxWfXMe5uElVcfiCan9203lQyxe3z3tll82ziPjd15ur71/yKxTiFOYiHIaVR8suHR5gTw7Fg1KyEuZIA0yDPZQ1rbI102NDcWpAIWPZEy9a3VVYJ2K8n9D+2PCu9dWG4mLn/Pjz2/hemiPOHTkK788+FgVOXJSSlYRfZ7vqzsVYRmK8awMfY9lCW09EPFGzFlGlY+Im3X//nEyffH6Xs87MinEXC9zUWwpj4tFSkTWUd4yi0ob2YXjGxVP7DRuPvlQgzmsTXfZySpysf//7299dIF7ZmRjuWjTR6jCmEqsKL7UPL/k3Fm2lD93ri+vIjD5OXK7po+KRYGoT4vKd8VhxagdX5l+v2VQNVxXqf7hHiRHVgXjfz8KLsrAN3ljmi7PpFU5cKjXsH3Z4atsvMc/WE2d5WGpju1b/qdg5baMJjq/jrlSkEjFgtp9ayVnieqvFzpkn7tUZTBreZrlzqmzxWTsnUmTvPfp3FfOHz52Xjw33vbdP4+UVcm6e8UsWuSOWk8upeJ0fTf8BLwCdBLCxUX4AAAAASUVORK5CYII=","Description":"","VI Name":"Completely Blank.vi"}};
-        if (typeof rawData === 'undefined') {
-            var rawData = {
-                "Structure to Diagram": [],
-                "Diagram to Structure": [],
-                "FP": {
-                    "Bounds": {
-                        "Width": 0,
-                        "Height": 0
-                    },
-                    "Position": {
-                        "Left": 0,
-                        "Top": 0
-                    },
-                    "Color": "E2E2E2",
-                    "Image": ""
-                },
-                "BD": {
-                    "Bounds": {
-                        "Width": 0,
-                        "Height": 0
-                    },
-                    "Position": {
-                        "Left": 0,
-                        "Top": 0
-                    },
-                    "Color": "FFFFFF",
-                    "Image": ""
-                },
-                "Metadata": {
-                    "Image": "",
-                    "Description": "",
-                    "VI Name": ""
-                }
-            }
-        }
-    </script>
+    <script>var rawData = {"Structure to Diagram":[],"Diagram to Structure":[],"FP":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"E2E2E2","Image":""},"BD":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"FFFFFF","Image":""},"Metadata":{"Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAABCUlEQVR42u2V0Q2EIAyGu8LtxCyuwAqs4AquwArs5PXoAbUnJ8VgfLBpGmz0/9pCEOACW4fZtYARA5AA12Dee4whzBRfWsBhvQIAPQADsMSYjWUQYIwJIcTYB1igRACRQQDqZtePyDA5w8pPmQig8kNXBxXdnKERrWHuHVFlMjlzGgD7e8tP0bkRNRxTvsk6gG8zkp4mQNcBeGmHjur4EWEUANo67iKD75ETgLyGkQDUArBc8XNgYj5Liw5IpIbZ6QB3WtQrFgLA7tSC+XZZua5t+eZnwU3dQUo5/iAWEe+iW/UesKzdMIq646+pT5HoQ8htqAnwR7rpn5wGYgXsrj/9B/AAbg0Yam/U4rpT9gGxVAAAAABJRU5ErkJggg==","Description":"","VI Name":"Completely Blank.vi"}};</script>
     <div class="borders">
         <div class="border border-top"></div>
         <div class="border border-bottom"></div>
@@ -56,274 +160,132 @@
         <div id="vi-info-container"></div>
     </div>
     <script>
-        $fpContainer = document.getElementById("fp-container");
-        $fpContainer.style.backgroundColor = "#" + rawData["FP"]["Color"];
-        if (rawData["FP"]["Image"] === "") {
-            $fpContainer.innerHTML = "Front Panel is empty"
-        } else {
-            $fpContainer.innerHTML = `<img src="${rawData["FP"]["Image"]}" style="display:block;min-height:${rawData["FP"]["Bounds"]["Height"]}px;min-width:${rawData["FP"]["Bounds"]["Width"]}px" />`;
-        }
+$fpContainer = document.getElementById("fp-container");
+$fpContainer.style.backgroundColor = "#" + rawData["FP"]["Color"];
+if (rawData["FP"]["Image"] === "") {
+    $fpContainer.innerHTML = "Front Panel is empty";
+} else {
+    $fpContainer.innerHTML = `<img src="${rawData["FP"]["Image"]}" style="display:block;min-height:${rawData["FP"]["Bounds"]["Height"]}px;min-width:${rawData["FP"]["Bounds"]["Width"]}px" />`;
+}
 
-        let structureMap = {}
-        rawData["Structure to Diagram"].forEach(item => {
-            structureMap[item.UID] = item["Diagram Group"]
-        })
-        let diagramMap = {}
-        rawData["Diagram to Structure"].forEach(item => {
-            diagramMap[item["Diagram UID"]] = item["Diagram Children"]
-        })
+let structureMap = {};
+rawData["Structure to Diagram"].forEach(item => {
+    structureMap[item.UID] = item["Diagram Group"];
+});
+let diagramMap = {};
+rawData["Diagram to Structure"].forEach(item => {
+    diagramMap[item["Diagram UID"]] = item["Diagram Children"];
+});
 
-        let structures = [];
-        function traverseDiagram(diagramUID, parentPosition) {
-            if (diagramUID in diagramMap) {
-                return diagramMap[diagramUID].map(structureUID => traverseStructure(structureUID, parentPosition))
-            } else {
-                return []
-            }
-        }
-        function traverseStructure(structureUID, parentPosition) {
-            let structureData = structureMap[structureUID];
-            let diagrams = []
-            let currentPosition = {
-                "top": structureData["Position"]["Top"],
-                "left": structureData["Position"]["Left"]
-            }
-            structureData["Diagram Data"].forEach(diagram => {
-                diagrams.push({
-                    "image": diagram["Diagram Image"],
-                    "structures": traverseDiagram(diagram["UID"], currentPosition)
-                })
-            })
-            return {
-                "top": structureData["Position"]["Top"] - parentPosition["top"],
-                "left": structureData["Position"]["Left"] - parentPosition["left"],
-                "width": structureData["Bounds"]["Width"],
-                "height": structureData["Bounds"]["Height"],
-                "diagrams": diagrams,
-                "defaultFrame": structureData["Default Frame"]
-            }
-        }
-        rawData["Structure to Diagram"].forEach(item => {
-            let structureUID = item["UID"];
-            if (item["Diagram Group"]["Is on TLD?"]) {
-                structures.push(traverseStructure(structureUID, { "top": 0, "left": 0 }))
-            }
-        })
+let structures = [];
+function traverseDiagram(diagramUID, parentPosition) {
+    if (diagramUID in diagramMap) {
+        return diagramMap[diagramUID].map(structureUID => traverseStructure(structureUID, parentPosition));
+    } else {
+        return [];
+    }
+}
+function traverseStructure(structureUID, parentPosition) {
+    let structureData = structureMap[structureUID];
+    let diagrams = [];
+    let currentPosition = {
+        "top": structureData["Position"]["Top"],
+        "left": structureData["Position"]["Left"]
+    };
+    structureData["Diagram Data"].forEach(diagram => {
+        diagrams.push({
+            "image": diagram["Diagram Image"],
+            "structures": traverseDiagram(diagram["UID"], currentPosition)
+        });
+    });
+    return {
+        "top": structureData["Position"]["Top"] - parentPosition["top"],
+        "left": structureData["Position"]["Left"] - parentPosition["left"],
+        "width": structureData["Bounds"]["Width"],
+        "height": structureData["Bounds"]["Height"],
+        "diagrams": diagrams,
+        "defaultFrame": structureData["Default Frame"]
+    };
+}
+rawData["Structure to Diagram"].forEach(item => {
+    let structureUID = item["UID"];
+    if (item["Diagram Group"]["Is on TLD?"]) {
+        structures.push(traverseStructure(structureUID, { "top": 0, "left": 0 }));
+    }
+});
 
-        function printStructures(structures) {
-            let output = "";
-            structures.forEach((structure) => {
-                let defaultFrame = structure["defaultFrame"];
-                output += `<div class="structure" 
+function printStructures(structures) {
+    let output = "";
+    structures.forEach((structure) => {
+        let defaultFrame = structure["defaultFrame"];
+        output += `<div class="structure" 
                 style="top:${structure.top}px; left:${structure.left}px; width:${structure.width}px; height:${structure.height}px" 
                 data-diagrams="${structure.diagrams.length}"
                 data-index="${defaultFrame}">`;
-                structure.diagrams.forEach((diagram, index) => {
-                    output += `<div class="diagram${(index == defaultFrame) ? ' visible' : ''}" 
+        structure.diagrams.forEach((diagram, index) => {
+            output += `<div class="diagram${(index === defaultFrame) ? ' visible' : ''}" 
                     style="background-image:url(${diagram.image}); width:${structure.width}px; height:${structure.height}px">`;
-                    output += printStructures(diagram.structures);
-                    output += '</div>';
-                });
-                output += `</div>`;
-            });
-            return output;
-        }
+            output += printStructures(diagram.structures);
+            output += '</div>';
+        });
+        output += `</div>`;
+    });
+    return output;
+}
 
-        $bdContainer = document.getElementById("bd-container")
-        if (rawData["BD"]["Image"] === "") {
-            let output = "Block Diagram is empty";
-            $bdContainer.innerHTML = output;
+$bdContainer = document.getElementById("bd-container");
+if (rawData["BD"]["Image"] === "") {
+    let output = "Block Diagram is empty";
+    $bdContainer.innerHTML = output;
 
-        } else {
-            let bgLeft = rawData["BD"]["Position"]["Left"];
-            let bgTop = rawData["BD"]["Position"]["Top"];
-            let bgWidth = rawData["BD"]["Bounds"]["Width"];
-            let bgHeight = rawData["BD"]["Bounds"]["Height"];
-            let output = `<div style="left:${bgLeft}px;top:${bgTop}px;width:${bgWidth}px;height:${bgHeight}px;background-image:url(${rawData["BD"]["Image"]})"></div>` + printStructures(structures);
-            document.getElementById("top-level-diagram").innerHTML = output;
-            if (bgLeft < 0) {
-                $bdContainer.style.left = (bgLeft * -1) + "px";
-            }
-            if (bgTop < 0) {
-                $bdContainer.style.top = (bgTop * -1) + "px";
-            }
-        }
-        document.body.style.backgroundColor = "#" + rawData["BD"]["Color"];
+} else {
+    let bgLeft = rawData["BD"]["Position"]["Left"];
+    let bgTop = rawData["BD"]["Position"]["Top"];
+    let bgWidth = rawData["BD"]["Bounds"]["Width"];
+    let bgHeight = rawData["BD"]["Bounds"]["Height"];
+    let output = `<div style="left:${bgLeft}px;top:${bgTop}px;width:${bgWidth}px;height:${bgHeight}px;background-image:url(${rawData["BD"]["Image"]})"></div>` + printStructures(structures);
+    document.getElementById("top-level-diagram").innerHTML = output;
+    if (bgLeft < 0) {
+        $bdContainer.style.left = (bgLeft * -1) + "px";
+    }
+    if (bgTop < 0) {
+        $bdContainer.style.top = (bgTop * -1) + "px";
+    }
+}
+document.body.style.backgroundColor = "#" + rawData["BD"]["Color"];
 
 
-        document.querySelectorAll(".structure").forEach(structureElem => {
-            structureElem.addEventListener("click", (event) => {
-                event.stopPropagation()
-                let diagrams = parseInt(structureElem.getAttribute("data-diagrams"));
-                let oldIndex = parseInt(structureElem.getAttribute("data-index"));
-                let newIndex = (oldIndex + 1) % diagrams;
-                structureElem.children[oldIndex].classList.remove("visible")
-                structureElem.children[newIndex].classList.add("visible")
-                structureElem.setAttribute("data-index", newIndex)
-            });
-        })
+document.querySelectorAll(".structure").forEach(structureElem => {
+    structureElem.addEventListener("click", (event) => {
+        event.stopPropagation();
+        let diagrams = parseInt(structureElem.getAttribute("data-diagrams"));
+        let oldIndex = parseInt(structureElem.getAttribute("data-index"));
+        let newIndex = (oldIndex + 1) % diagrams;
+        structureElem.children[oldIndex].classList.remove("visible");
+        structureElem.children[newIndex].classList.add("visible");
+        structureElem.setAttribute("data-index", newIndex);
+    });
+});
 
-        let $viInfoContainer = document.getElementById("vi-info-container");
+let $viInfoContainer = document.getElementById("vi-info-container");
 
-        let metadata = rawData["Metadata"];
-        let infoOutput = `<h2>${metadata["VI Name"]}</h2>`;
-        if (metadata["Image"] !== "") {
-            infoOutput += `<img src="${metadata["Image"]}">`;
-        }
-        infoOutput += `<h3>Description</h3>`;
-        infoOutput += `<p>"${metadata["Description"].replace(/(\r\n|\n)/g, "<br />")}"</p>`;
-        $viInfoContainer.innerHTML = infoOutput;
+let metadata = rawData["Metadata"];
+let infoOutput = `<h2>${metadata["VI Name"]}</h2>`;
+if (metadata["Image"] !== "") {
+    infoOutput += `<img src="${metadata["Image"]}">`;
+}
+infoOutput += `<h3>Description</h3>`;
+infoOutput += `<p>"${metadata["Description"].replace(/(\r\n|\n)/g, "<br />")}"</p>`;
+$viInfoContainer.innerHTML = infoOutput;
 
-        let $tabContainer = document.getElementById("tab-container");
-        document.querySelectorAll("#switcher button").forEach($btn => {
-            $btn.addEventListener("click", () => {
-                let tabSelect = $btn.getAttribute("data-tab-select");
-                console.log($btn);
-                $tabContainer.setAttribute("data-tab", tabSelect)
-            });
-        })
-
-    </script>
-    <style>
-        .structure {
-            position: absolute;
-            overflow-y: hidden;
-            cursor: pointer;
-        }
-
-        .diagram {
-            display: none;
-        }
-
-        .diagram.visible {
-            display: block;
-        }
-
-        .structure:hover {
-            box-shadow: 2px 2px 8px -4px #000;
-            transition: 0.2s;
-        }
-
-        #top-level-diagram {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        #top-level-diagram>div {
-            position: absolute;
-        }
-
-        #fp-container {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        #bd-container {
-            position: absolute;
-        }
-
-        #switcher {
-            position: fixed;
-            left: 10px;
-            bottom: 10px;
-            background-color: #c8c8c8d4;
-            border-radius: 5px;
-            z-index: 100;
-        }
-
-        #switcher::before {
-            content: "";
-            display: block;
-            width: 40px;
-            height: 32px;
-            position: absolute;
-            box-sizing: border-box;
-            border: 2px solid #333;
-            border-radius: 5px;
-            transition: .3s;
-            left: 0;
-        }
-
-        #switcher button {
-            box-sizing: border-box;
-            border: 0;
-            background-color: transparent;
-            padding: 5px 7px;
-            font-size: 15px;
-            line-height: 23px;
-            display: inline-block;
-            height: 32px;
-            width: 40px;
-            cursor: pointer;
-        }
-
-        #fp-container,
-        #bd-container,
-        #vi-info-container {
-            display: none;
-        }
-
-        #tab-container {
-            color: #292929;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        #tab-container[data-tab=fp] #fp-container {
-            display: block;
-        }
-
-        #tab-container[data-tab=bd] #bd-container {
-            display: block;
-        }
-
-        #tab-container[data-tab=bd] #switcher::before {
-            left: 40px;
-        }
-
-        #tab-container[data-tab=vi-info] #vi-info-container {
-            display: block;
-        }
-
-        #tab-container[data-tab=vi-info] #switcher::before {
-            left: 80px;
-        }
-
-        .border {
-            position: fixed;
-            z-index: 100;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #333;
-        }
-
-        .border-top {
-            height: 1px;
-            bottom: auto;
-        }
-
-        .border-left {
-            width: 1px;
-            right: auto;
-        }
-
-        .border-bottom {
-            height: 1px;
-            top: auto;
-        }
-
-        .border-right {
-            width: 1px;
-            left: auto;
-        }
-    </style>
+let $tabContainer = document.getElementById("tab-container");
+document.querySelectorAll("#switcher button").forEach($btn => {
+    $btn.addEventListener("click", () => {
+        let tabSelect = $btn.getAttribute("data-tab-select");
+        console.log($btn);
+        $tabContainer.setAttribute("data-tab", tabSelect);
+    });
+});</script>
 </body>
 
 </html>

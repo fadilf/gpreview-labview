@@ -1,6 +1,6 @@
 # GPreview LabVIEW
 
-![GPreview LV Demo](Media/LVDemo.webp)
+![GPreview LV Demo](Assets/LVDemo.webp)
 
 Allows you to "print" VI files into interactive HTML files with browsable multi-frame structures like case structures and event structures.
 

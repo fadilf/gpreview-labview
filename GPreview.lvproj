@@ -24,6 +24,8 @@
 		<Item Name="Generate VI HTML.vi" Type="VI" URL="../Generate VI HTML.vi"/>
 		<Item Name="Get VI Metadata.vi" Type="VI" URL="../Get VI Metadata.vi"/>
 		<Item Name="Image to PNG Data URI.vi" Type="VI" URL="../Image to PNG Data URI.vi"/>
+		<Item Name="Inline Format.vi" Type="VI" URL="../Inline Format.vi"/>
+		<Item Name="Minify HTML.vi" Type="VI" URL="../Minify HTML.vi"/>
 		<Item Name="VI Data to JSON.vi" Type="VI" URL="../VI Data to JSON.vi"/>
 		<Item Name="Dependencies" Type="Dependencies"/>
 		<Item Name="Build Specifications" Type="Build"/>
