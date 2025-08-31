@@ -22,6 +22,8 @@
 		<Item Name="Directory.vi" Type="VI" URL="../Directory.vi"/>
 		<Item Name="Earliest MultiFrameStructure Diagram UID.vi" Type="VI" URL="../Earliest MultiFrameStructure Diagram UID.vi"/>
 		<Item Name="Generate VI HTML.vi" Type="VI" URL="../Generate VI HTML.vi"/>
+		<Item Name="Get VI BD Data.vi" Type="VI" URL="../Get VI BD Data.vi"/>
+		<Item Name="Get VI FP Data.vi" Type="VI" URL="../Get VI FP Data.vi"/>
 		<Item Name="Get VI Metadata.vi" Type="VI" URL="../Get VI Metadata.vi"/>
 		<Item Name="Image to PNG Data URI.vi" Type="VI" URL="../Image to PNG Data URI.vi"/>
 		<Item Name="Inline Format.vi" Type="VI" URL="../Inline Format.vi"/>

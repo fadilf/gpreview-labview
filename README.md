@@ -14,8 +14,30 @@ Examples of interactive previews:
 This tool can also be used as [VS Code extension](https://marketplace.visualstudio.com/items?itemName=fadil.gpreview) for convenience.
 
 ## Usage
-`LabVIEWCLI -OperationName RunVI -PortNumber <port number> -VIPath <path to CLI.vi> <path to target VI file> <name of output HTML file> [Port Number]`
+### Direct from VI
+By using `Generate VI HTML.vi`, you can generate the HTML output for a LabVIEW file directly. See `.\Test Cases\Run Tests.vi` for more information.
 
-Example usage:
+**### CLI**
 
-`LabVIEWCLI -OperationName RunVI -PortNumber 3364 -VIPath .\CLI.vi "C:\...\Test Cases\ControllerWorkerPattern 1.vi" "C:\...\Test Cases\ControllerWorkerPattern 1.html" 3363`
+**Basic syntax:**
+```
+LabVIEWCLI -OperationName RunVI -PortNumber <port number> -VIPath <path to CLI.vi> <optional parameters> <labview file path> <output file path>
+```
+
+**Optional parameters:**
+```
+[--default-tab=<FP|BD|Info>] - Sets the default tab visible when opening the preview
+                               If tab is not available or this param not set, defaults to Info
+[--minify]                  - Minifies the HTML output
+[--disable-fp]              - Disables the front-panel tab
+[--disable-bd]              - Disables the block-diagram tab
+```
+
+**Required parameters:**
+- `<labview file path>` - Absolute path to vi/vim/vit/ctl file
+- `<output file path>` - Absolute path to output HTML file
+
+**Example usage:**
+```
+LabVIEWCLI -OperationName RunVI -PortNumber 3363 -VIPath .\CLI.vi --minify "C:\...\Test Cases\ControllerWorkerPattern.vit" "C:\...\Test Cases\ControllerWorkerPattern.html"
+```

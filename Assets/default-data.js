@@ -30,6 +30,10 @@ if (typeof rawData === 'undefined') {
             "Image": "",
             "Description": "",
             "VI Name": ""
+        },
+        "Options": {
+            "Disabled Tabs": [],
+            "Default Tab": "BD"
         }
     };
 }
