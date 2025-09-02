@@ -17,7 +17,7 @@ if (!rawData["Options"]["Disabled Tabs"].includes("FP")) {
             "left": rawData["FP"]["Position"]["Left"] + "px",
             "top": rawData["FP"]["Position"]["Top"] + "px",
         };
-        $fpContainer.innerHTML = `<div class="fp" + style="${inlineStyleDict(fpStyle)}">Front Panel is empty</div>`;
+        $fpContainer.innerHTML = `<div class="fp" + style="${inlineStyleDict(fpStyle)}"></div>`;
     }
 }
 
