@@ -17,7 +17,7 @@ This tool can also be used as [VS Code extension](https://marketplace.visualstud
 ### Direct from VI
 By using `Generate VI HTML.vi`, you can generate the HTML output for a LabVIEW file directly. See `.\Test Cases\Run Tests.vi` for more information.
 
-**### CLI**
+### CLI
 
 **Basic syntax:**
 ```
