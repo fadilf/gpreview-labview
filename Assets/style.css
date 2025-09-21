@@ -17,16 +17,19 @@
     transition: 0.2s;
 }
 
+#top-level-fp,
 #top-level-diagram {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-#top-level-diagram>div {
+#top-level-fp > div,
+#top-level-diagram > div {
     position: absolute;
 }
 
+#fp-container,
 #bd-container {
     position: absolute;
 }
@@ -67,10 +70,6 @@
 
 #switcher button:enabled {
     cursor: pointer;
-}
-
-#fp-container #fp {
-    position: absolute;
 }
 
 #vi-info-container {

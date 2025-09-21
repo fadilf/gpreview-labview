@@ -21,16 +21,19 @@
     transition: 0.2s;
 }
 
+#top-level-fp,
 #top-level-diagram {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-#top-level-diagram>div {
+#top-level-fp > div,
+#top-level-diagram > div {
     position: absolute;
 }
 
+#fp-container,
 #bd-container {
     position: absolute;
 }
@@ -71,10 +74,6 @@
 
 #switcher button:enabled {
     cursor: pointer;
-}
-
-#fp-container #fp {
-    position: absolute;
 }
 
 #vi-info-container {
@@ -160,7 +159,7 @@
 </head>
 
 <body>
-    <script>var rawData = {"Structure to Diagram":[{"UID":300,"Diagram Group":{"Diagram Data":[{"UID":308,"Diagram Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU4AAABmCAMAAACTBYi0AAADAFBMVEX//////8z//5n//2b//zP//wD/zP//zMz/zJn/zGb/zDP/zAD/mf//mcz/mZn/mWb/mTP/mQD/Zv//Zsz/Zpn/Zmb/ZjP/ZgD/M///M8z/M5n/M2b/MzP/MwD/AP//AMz/AJn/AGb/ADP/AADM///M/8zM/5nM/2bM/zPM/wDMzP/MzMzMzJnMzGbMzDPMzADMmf/MmczMmZnMmWbMmTPMmQDMZv/MZszMZpnMZmbMZjPMZgDMM//MM8zMM5nMM2bMMzPMMwDMAP/MAMzMAJnMAGbMADPMAACZ//+Z/8yZ/5mZ/2aZ/zOZ/wCZzP+ZzMyZzJmZzGaZzDOZzACZmf+ZmcyZmZmZmWaZmTOZmQCZZv+ZZsyZZpmZZmaZZjOZZgCZM/+ZM8yZM5mZM2aZMzOZMwCZAP+ZAMyZAJmZAGaZADOZAABm//9m/8xm/5lm/2Zm/zNm/wBmzP9mzMxmzJlmzGZmzDNmzABmmf9mmcxmmZlmmWZmmTNmmQBmZv9mZsxmZplmZmZmZjNmZgBmM/9mM8xmM5lmM2ZmMzNmMwBmAP9mAMxmAJlmAGZmADNmAAAz//8z/8wz/5kz/2Yz/zMz/wAzzP8zzMwzzJkzzGYzzDMzzAAzmf8zmcwzmZkzmWYzmTMzmQAzZv8zZswzZpkzZmYzZjMzZgAzM/8zM8wzM5kzM2YzMzMzMwAzAP8zAMwzAJkzAGYzADMzAAAA//8A/8wA/5kA/2YA/zMA/wAAzP8AzMwAzJkAzGYAzDMAzAAAmf8AmcwAmZkAmWYAmTMAmQAAZv8AZswAZpkAZmYAZjMAZgAAM/8AM8wAM5kAM2YAMzMAMwAAAP8AAMwAAJkAAGYAADPuAADdAAC7AACqAACIAAB3AABVAABEAAAiAAARAAAA7gAA3QAAuwAAqgAAiAAAdwAAVQAARAAAIgAAEQAAAO4AAN0AALsAAKoAAIgAAHcAAFUAAEQAACIAABHu7u7d3d27u7uqqqqIiIh3d3dVVVVEREQiIiIREREAAAD7CIKZAAACAUlEQVR42u3dy22DQBSFYWYHfVCCd+nBVSQNUEVWcQUU4bgIFkjJKmnnZgawDZZwrHAjH6P/YPyQjARHwzeYjTMjjsnSQ2Lpc3y9LeetWCbLwjpljiIdiMC6dHTqHIfIjpwLCruoUN1/Dm/bm0anUJk6dvav4wp/qdM07bx7bBhjN9V5nEaz/jnTOICJnfffG7uo88msSe/Di1mV5Qf7Kid9nnrVqHNsp8DejOpMdlZ9r/FRNEPFRT3++uVWCoWe7BQcnYXZd6ozP8Qa4+BMg/ViEhIanep25vsyPG+79xur4qeZMY2ds5c84zqLjzJ/7+vMNnXY1VdnduycuyAf6owz0OdrZ6elSSid7c21rbBzcTFKdcrZ+dB1Ktr5yHUqXnf++T4jdq4sUnauo00ZOx+/Tik711EodmIndmInwU7sxE6CndiJndiJndipamc7hDpc7GxDF+r0sTPW2bbU6WVnG1KZ1OllZ3eqU6ejnZzsrnYyFTnaSZ3edlKno52MTlc7GZ2OdvIj09NO7ne62kmbrnZyv9PVTu53Yid2YifBTuzEToKd2Imd2Emb2Imd2EmwEzuxk2AndmIndhLsxE7sJNiJndhJsBM7sRM7CXZiJ3YS7MRO7CTYiZ3YiZ0EO7ETOwl2Yid2Euz8PztZ1/Yfwywsqv/PvqrTndWvTOKXHx9Z60PisnhYAAAAAElFTkSuQmCC"},{"UID":314,"Diagram Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU4AAABmCAMAAACTBYi0AAADAFBMVEX//////8z//5n//2b//zP//wD/zP//zMz/zJn/zGb/zDP/zAD/mf//mcz/mZn/mWb/mTP/mQD/Zv//Zsz/Zpn/Zmb/ZjP/ZgD/M///M8z/M5n/M2b/MzP/MwD/AP//AMz/AJn/AGb/ADP/AADM///M/8zM/5nM/2bM/zPM/wDMzP/MzMzMzJnMzGbMzDPMzADMmf/MmczMmZnMmWbMmTPMmQDMZv/MZszMZpnMZmbMZjPMZgDMM//MM8zMM5nMM2bMMzPMMwDMAP/MAMzMAJnMAGbMADPMAACZ//+Z/8yZ/5mZ/2aZ/zOZ/wCZzP+ZzMyZzJmZzGaZzDOZzACZmf+ZmcyZmZmZmWaZmTOZmQCZZv+ZZsyZZpmZZmaZZjOZZgCZM/+ZM8yZM5mZM2aZMzOZMwCZAP+ZAMyZAJmZAGaZADOZAABm//9m/8xm/5lm/2Zm/zNm/wBmzP9mzMxmzJlmzGZmzDNmzABmmf9mmcxmmZlmmWZmmTNmmQBmZv9mZsxmZplmZmZmZjNmZgBmM/9mM8xmM5lmM2ZmMzNmMwBmAP9mAMxmAJlmAGZmADNmAAAz//8z/8wz/5kz/2Yz/zMz/wAzzP8zzMwzzJkzzGYzzDMzzAAzmf8zmcwzmZkzmWYzmTMzmQAzZv8zZswzZpkzZmYzZjMzZgAzM/8zM8wzM5kzM2YzMzMzMwAzAP8zAMwzAJkzAGYzADMzAAAA//8A/8wA/5kA/2YA/zMA/wAAzP8AzMwAzJkAzGYAzDMAzAAAmf8AmcwAmZkAmWYAmTMAmQAAZv8AZswAZpkAZmYAZjMAZgAAM/8AM8wAM5kAM2YAMzMAMwAAAP8AAMwAAJkAAGYAADPuAADdAAC7AACqAACIAAB3AABVAABEAAAiAAARAAAA7gAA3QAAuwAAqgAAiAAAdwAAVQAARAAAIgAAEQAAAO4AAN0AALsAAKoAAIgAAHcAAFUAAEQAACIAABHu7u7d3d27u7uqqqqIiIh3d3dVVVVEREQiIiIREREAAAD7CIKZAAACb0lEQVR42u2d3W2DMBCA4a3skU7RHbJFF+gIHSCdIENUHaKqeE5H4fXKbwIxpo65iIN8R10cKUjw1ff5QmWSCKEYSfVjYmui24fF5Si2wTYTp5mrqC7EQJs7Ou1ch5ETuQB6qTV0vGl0GoJpx53dPj3sw0an2HTn4iHtGAvC2U2jSfM7sXEBA3cufzZyhTM9vJ+ey0714ulLTrsrnmeuNnD23WngbFycH8e6U7Zqlx2Hb3ePWh7o2Z0mR+e+a+XgFPl2JyFDo9O8O/s4P3feMY07vSWPi/P1Lcl+91XeT8/suNNXkPdxJpnITzMVDZN97CjcOROMJZzm3LlqnBbduWacFuvO6PuMuHNjYcqd26Bpxp3rx2nKndsAijvv707+IRlRTfjdKQXxf0ioOwtpgTZ/BfpjfSlC3Vl041N6Y5X+sO/g9LsTbAH9cHeCLQKn351gi0h2vzuZciKmIr87qYIiCqXpupMyfSJurDvddxNX483jzrwNcM7E2VgzT+vInWSH2iROjztLnHkOzvk4G3fmaQUzJdmV3FmnOjgV3Umyq7qTqUjRnQ5Okn2mO8Gp6E6SXdWdlPGK7uRDpqY7R+93gjPWnb77neCMcqf3fifUYtzJ/U7ciTtxJ4E7cSfuBCfuxJ24E3fiTtyJO3EngTtxJ+4k2XEn7sSduJNkv687icmVG6wrWmpdEavbAvqsyVxoTSbYWM/OevYHWc/OlKP6LBAqpYA6KdydhOZzlIiYD548g04dKM+g06PJ8zu1aeJO3Ik7cSeBO3En7iRwJ+7EnbiTbMeduPOB3Enb2ncMs7FZ/X72TaU7TQ8moRd/RFUWS4OU7k8AAAAASUVORK5CYII="}],"Position":{"Left":549,"Top":145},"Bounds":{"Width":334,"Height":102},"Is on TLD?":true,"Default Frame":0}}],"Diagram to Structure":[{"Diagram UID":3,"Diagram Children":[300]}],"FP":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"E2E2E2","Image":""},"BD":{"Bounds":{"Width":888,"Height":305},"Position":{"Left":100,"Top":50},"Color":"FFFFFF","Image":"data:image/png;base64,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"},"Metadata":{"Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAABG0lEQVR42t2W0Q2EIAyGu8LtxCyuwAqs4Aq3Aiuwk9ejB9QqSjX14ZqGYKP/R1uCADxgi5k9C7AogASEAYsx4pjSTONLCzhdrwDAFYADeOexGosgwDmXUsrjNcAb2gggIghA3er6Ejkm59jySyQDaPnpUgYd3RqhEi1pvlqiTmVq5DYA9nvLd9G9Eg1sU95kHSCOGUlPE6DrAHxpp47q+BFhFABqHXcRwffICUDew0gAagF4rvjdMDlepUUGJNLD7GSAnRbrFRMBYGdqw/yy7BzXvn2zmXBTZ1BCgT+IScaH7F7dAxb1K0ZTD/w19S4SeQi5FbUADqSH/smlIF7AjuWsfvp8s9jeKmwBhiXaqlv1wBCwvYr9zd3U1D46J5Z3lzDigAAAAABJRU5ErkJggg==","Description":"","VI Name":"Flat Sequence Structure Test.vi"},"Options":{"Disabled Tabs":[],"Default Tab":"Info"}};</script>
+    <script>var rawData = {"FP":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"E2E2E2","Image":"","Page to PageSelectors":[],"PageSelector to Pages":[]},"BD":{"Bounds":{"Width":888,"Height":305},"Position":{"Left":100,"Top":50},"Color":"FFFFFF","Image":"data:image/png;base64,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","Structure to Diagram":[{"UID":300,"Diagram Group":{"Diagram Data":[{"UID":308,"Diagram Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU4AAABmCAMAAACTBYi0AAADAFBMVEX//////8z//5n//2b//zP//wD/zP//zMz/zJn/zGb/zDP/zAD/mf//mcz/mZn/mWb/mTP/mQD/Zv//Zsz/Zpn/Zmb/ZjP/ZgD/M///M8z/M5n/M2b/MzP/MwD/AP//AMz/AJn/AGb/ADP/AADM///M/8zM/5nM/2bM/zPM/wDMzP/MzMzMzJnMzGbMzDPMzADMmf/MmczMmZnMmWbMmTPMmQDMZv/MZszMZpnMZmbMZjPMZgDMM//MM8zMM5nMM2bMMzPMMwDMAP/MAMzMAJnMAGbMADPMAACZ//+Z/8yZ/5mZ/2aZ/zOZ/wCZzP+ZzMyZzJmZzGaZzDOZzACZmf+ZmcyZmZmZmWaZmTOZmQCZZv+ZZsyZZpmZZmaZZjOZZgCZM/+ZM8yZM5mZM2aZMzOZMwCZAP+ZAMyZAJmZAGaZADOZAABm//9m/8xm/5lm/2Zm/zNm/wBmzP9mzMxmzJlmzGZmzDNmzABmmf9mmcxmmZlmmWZmmTNmmQBmZv9mZsxmZplmZmZmZjNmZgBmM/9mM8xmM5lmM2ZmMzNmMwBmAP9mAMxmAJlmAGZmADNmAAAz//8z/8wz/5kz/2Yz/zMz/wAzzP8zzMwzzJkzzGYzzDMzzAAzmf8zmcwzmZkzmWYzmTMzmQAzZv8zZswzZpkzZmYzZjMzZgAzM/8zM8wzM5kzM2YzMzMzMwAzAP8zAMwzAJkzAGYzADMzAAAA//8A/8wA/5kA/2YA/zMA/wAAzP8AzMwAzJkAzGYAzDMAzAAAmf8AmcwAmZkAmWYAmTMAmQAAZv8AZswAZpkAZmYAZjMAZgAAM/8AM8wAM5kAM2YAMzMAMwAAAP8AAMwAAJkAAGYAADPuAADdAAC7AACqAACIAAB3AABVAABEAAAiAAARAAAA7gAA3QAAuwAAqgAAiAAAdwAAVQAARAAAIgAAEQAAAO4AAN0AALsAAKoAAIgAAHcAAFUAAEQAACIAABHu7u7d3d27u7uqqqqIiIh3d3dVVVVEREQiIiIREREAAAD7CIKZAAACAUlEQVR42u3dy22DQBSFYWYHfVCCd+nBVSQNUEVWcQUU4bgIFkjJKmnnZgawDZZwrHAjH6P/YPyQjARHwzeYjTMjjsnSQ2Lpc3y9LeetWCbLwjpljiIdiMC6dHTqHIfIjpwLCruoUN1/Dm/bm0anUJk6dvav4wp/qdM07bx7bBhjN9V5nEaz/jnTOICJnfffG7uo88msSe/Di1mV5Qf7Kid9nnrVqHNsp8DejOpMdlZ9r/FRNEPFRT3++uVWCoWe7BQcnYXZd6ozP8Qa4+BMg/ViEhIanep25vsyPG+79xur4qeZMY2ds5c84zqLjzJ/7+vMNnXY1VdnduycuyAf6owz0OdrZ6elSSid7c21rbBzcTFKdcrZ+dB1Ktr5yHUqXnf++T4jdq4sUnauo00ZOx+/Tik711EodmIndmInwU7sxE6CndiJndiJndipamc7hDpc7GxDF+r0sTPW2bbU6WVnG1KZ1OllZ3eqU6ejnZzsrnYyFTnaSZ3edlKno52MTlc7GZ2OdvIj09NO7ne62kmbrnZyv9PVTu53Yid2YifBTuzEToKd2Imd2Emb2Imd2EmwEzuxk2AndmIndhLsxE7sJNiJndhJsBM7sRM7CXZiJ3YS7MRO7CTYiZ3YiZ0EO7ETOwl2Yid2Euz8PztZ1/Yfwywsqv/PvqrTndWvTOKXHx9Z60PisnhYAAAAAElFTkSuQmCC"},{"UID":314,"Diagram Image":""}],"Position":{"Left":549,"Top":145},"Bounds":{"Width":334,"Height":102},"Default Frame":1}}],"Diagram to Structure":[{"Diagram UID":3,"Diagram Children":[300]}],"TLD UID":3},"Metadata":{"Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHsAAAA6CAIAAAAfobHhAAADnElEQVR42u2ascrUQBDH9xH0DXwE61QWeQA7W7HYzvpKQRCuUEgj8oFgY6WChZDmCsXWVIKFXCG2NtoIdnEvk93Mzu4me5fkviv+wxKSvcxk97f/nckdp9TK1sJ8WxcKiIP4JRFfI2+A+ATxbYbtdjtzbJorOt4E8ZnEJxUtiEPjSxAvlXrTHZ2xHkO8LMumabojiC9C/I0ajkqJHkPcgHYNWWU28ZLxLZnAbU9HnATeQONLEE+Adj2UVdrmClllOeKxZOJ6QHzNd5WwhCpklet4O+SVE8RnEd/lGbHWWpkG4rOIc/FONoPbOBF3ED+dONVD3kSPuY8aEaeW4g7iE8QNXKU2HPHhtaTrd6yFxm2EOHcQn9a4KZ9C0eJEEGe/IA7c+30A4pPEO9sMEIMTbtD4XOL2essvxEm3HtuubZDHlyFOWD3oA+4tvw3vKosRJ7iCr7cMlvgIaxA/jrifQzaC/lgshTw+g/ixgULKIL4i8ShlEF+dOLLKWYnHXntAfP08DuLnIx7+ZwjEz1E5oXEQvzzi+DfzWYkDAYiDOAzEQRwG4iAOA3EQB3EYiIM4bD3i9z+8AKklid949kA9uSea6aQ7Xn39ZC7NEbAWIx7ipvbjzy+jbneZUrr7Zye1orIf1P7ltVhqDPu2MKPVCS/6VLW6tmG0vTxhUr7LGPFMjR+IF2aQ3VCrjru+SOI1g5hH3M3rrMQn8zgnbqwqDg+o9he3nQdq+cTt/Z7vvH0WIX775eb99y/5AQVxkrmQw5B5tJzS4QZ25+AeeMkgjCMtMC324GtGZSPTbYM7DaCQWvaIF63uAtYJjfcb2l8bPrU+bEhcVM6PP7+N19Ic4pwjh8Lns4+pwBEXXjJI+Dg7VXcu1jKi8W4MfI3lCG2cCPFEZC1UpWPEjd1995SYPvr8NifPHKVxpwXO1EuFMeJRr0gO5RMjVVppH5ZnnHiq3rD16L0C4jyamLLXUsSJ9e9/f/veGcQruxPDqkUbrQ41lcgq3GsfXvInFm2lD9Pr3XVkR59GXOb0UeIRMbUJ4vKd8VTiNA5OmT9es60aZhWaf1ijxIrqgHg/z8JTWTgGby3zibPtFW5c8hrqh12e2s5L7LPliLM2pNpY1eo/FZXTDprA8TzuvCJBxILZeWold4mbrRaVM4+4FzPYNHzMsnKqbOJHVU5YpPae/LuK+eJz6/lDg/vO68dxf4WW2474JYu4Q8vJdCpe50ftP78JeSiEqWmPAAAAAElFTkSuQmCC","Description":"","VI Name":"Flat Sequence Structure Test.vi"},"Options":{"Disabled Tabs":[],"Default Tab":"Info"}};</script>
     <div class="borders">
         <div class="border border-top"></div>
         <div class="border border-bottom"></div>
@@ -170,73 +169,182 @@
     <div id="tab-container" data-tab="FP">
         <div id="switcher"><button data-tab-select="FP">FP</button><button data-tab-select="BD">BD</button><button
                 data-tab-select="Info">Info</button></div>
-        <div id="fp-container"></div>
+        <div id="fp-container">
+            <div id="top-level-fp"></div>
+        </div>
         <div id="bd-container">
             <div id="top-level-diagram"></div>
         </div>
         <div id="vi-info-container"></div>
     </div>
-    <script>function inlineStyleDict(inlineObj) {
+    <script>/**
+ * Converts an object of style properties to an inline style string
+ * @param {} inlineObj - object of styles properties
+ * @returns {string} - inline style string
+ */
+function inlineStyleDict(inlineObj) {
     return Object.entries(inlineObj).reduce((acc, [key, value]) => {
         return `${acc}${key}:${value};`;
     }, "");
 }
 
-if (!rawData["Options"]["Disabled Tabs"].includes("FP")) {
-    $fpContainer = document.getElementById("fp-container");
-    $fpContainer.style.background = "#" + rawData["FP"]["Color"];
-    if (rawData["FP"]["Image"] === "") {
-        $fpContainer.innerHTML = `<div class="empty-msg">Front Panel is empty</div>`;
-    } else {
-        const fpStyle = {
-            "background": `url(${rawData["FP"]["Image"]})`,
-            "height": rawData["FP"]["Bounds"]["Height"] + "px",
-            "width": rawData["FP"]["Bounds"]["Width"] + "px",
-            "left": rawData["FP"]["Position"]["Left"] + "px",
-            "top": rawData["FP"]["Position"]["Top"] + "px",
-        };
-        $fpContainer.innerHTML = `<div class="fp" + style="${inlineStyleDict(fpStyle)}"></div>`;
-    }
+/**
+ * Returns a VIData object parsed from raw data
+ * @param {any} rawData - Raw data from either default-data.js or injected
+ * @returns {VIData}
+ */
+function parseRawData(rawData) {
+    let fp = rawData["FP"];
+    let bd = rawData["BD"];
+    let options = rawData["Options"];
+    let metadata = rawData["Metadata"];
+    return {
+        fp: {
+            color: fp["Color"],
+            image: fp["Image"],
+            bounds: {
+                width: fp["Bounds"]["Width"],
+                height: fp["Bounds"]["Height"],
+            },
+            position: {
+                left: fp["Position"]["Left"],
+                top: fp["Position"]["Top"],
+            },
+            tldUID: "-1-0",
+            structureToDiagrams: fp["PageSelector to Pages"].reduce((acc, item) => {
+                const pgData = item["PageSelector Data"];
+                acc[item["UID"]] = {
+                    position: {
+                        left: pgData["Position"]["Left"],
+                        top: pgData["Position"]["Top"],
+                    },
+                    bounds: {
+                        width: pgData["Bounds"]["Width"],
+                        height: pgData["Bounds"]["Height"],
+                    },
+                    defaultFrame: pgData["Default Page"],
+                    diagramData: pgData["Page Images"].map((page, index) => ({
+                        uid: item["UID"] + "-" + index,
+                        diagramImage: page,
+                    })),
+                };
+                return acc;
+            }, {}),
+            diagramToStructures: fp["Page to PageSelectors"].reduce((acc, item) => {
+                const pageUID = item["PageSelector"]["UID"] + "-" + item["PageSelector"]["Page Index"];
+                acc[pageUID] = item["PageSelector UID"];
+                return acc;
+            }, {}),
+        },
+        bd: {
+            color: bd["Color"],
+            image: bd["Image"],
+            bounds: {
+                width: bd["Bounds"]["Width"],
+                height: bd["Bounds"]["Height"],
+            },
+            position: {
+                left: bd["Position"]["Left"],
+                top: bd["Position"]["Top"],
+            },
+            tldUID: bd["TLD UID"],
+            structureToDiagrams: bd["Structure to Diagram"].reduce((acc, item) => {
+                const diagramGroup = item["Diagram Group"];
+                acc[item["UID"]] = {
+                    position: {
+                        top: diagramGroup["Position"]["Top"],
+                        left: diagramGroup["Position"]["Left"],
+                    },
+                    bounds: {
+                        width: diagramGroup["Bounds"]["Width"],
+                        height: diagramGroup["Bounds"]["Height"],
+                    },
+                    defaultFrame: diagramGroup["Default Frame"],
+                    diagramData: diagramGroup["Diagram Data"].map(diagram => ({
+                        uid: diagram["UID"],
+                        diagramImage: diagram["Diagram Image"],
+                    })),
+                };
+                return acc;
+            }, {}),
+            diagramToStructures: bd["Diagram to Structure"].reduce((acc, item) => {
+                acc[item["Diagram UID"]] = item["Diagram Children"];
+                return acc;
+            }, {}),
+        },
+        metadata: {
+            name: metadata["VI Name"],
+            description: metadata["Description"],
+            image: metadata["Image"],
+        },
+        options: {
+            defaultTab: options["Default Tab"],
+            disabledTabs: options["Disabled Tabs"],
+        }
+    };
 }
 
-function traverseDiagram(diagramUID, parentPosition) {
-    if (diagramUID in diagramMap) {
-        return diagramMap[diagramUID].map(structureUID => traverseStructure(structureUID, parentPosition));
+/**
+ * Traverses the diagram and structure data to build a nested structure
+ * @param {Object} structureToDiagrams - Mapping of structure UIDs to their data
+ * @param {Object} diagramToStructures - Mapping of diagram UIDs to their child structures
+ * @param {string} diagramUID - The UID of the current diagram to traverse
+ * @param {Object} parentPosition - The position of the parent structure for relative positioning
+ * @returns {Array} - Array of nested structures
+ */
+function traverseDiagram(structureToDiagrams, diagramToStructures, diagramUID, parentPosition) {
+    if (diagramUID in diagramToStructures) {
+        return diagramToStructures[diagramUID].map(structureUID => traverseStructure(structureToDiagrams, diagramToStructures, structureUID, parentPosition));
     } else {
         return [];
     }
 }
-function traverseStructure(structureUID, parentPosition) {
-    let structureData = structureMap[structureUID];
+
+/**
+ * Traverses a structure and its associated diagrams recursively
+ * @param {Object} structureToDiagrams - Mapping of structure UIDs to their data
+ * @param {Object} diagramToStructures - Mapping of diagram UIDs to their child structures
+ * @param {string} structureUID - The UID of the current structure to traverse
+ * @param {Object} parentPosition - The position of the parent structure for relative positioning
+ * @returns {Object} - The nested structure with its diagrams and child structures
+ */
+function traverseStructure(structureToDiagrams, diagramToStructures, structureUID, parentPosition) {
+    let structureData = structureToDiagrams[structureUID];
     let diagrams = [];
     let currentPosition = {
-        "top": structureData["Position"]["Top"],
-        "left": structureData["Position"]["Left"]
+        top: structureData.position.top,
+        left: structureData.position.left
     };
-    structureData["Diagram Data"].forEach(diagram => {
+    structureData.diagramData.forEach(diagram => {
         diagrams.push({
-            "image": diagram["Diagram Image"],
-            "structures": traverseDiagram(diagram["UID"], currentPosition)
+            image: diagram.diagramImage,
+            structures: traverseDiagram(structureToDiagrams, diagramToStructures, diagram.uid, currentPosition)
         });
     });
     return {
-        "top": structureData["Position"]["Top"] - parentPosition["top"],
-        "left": structureData["Position"]["Left"] - parentPosition["left"],
-        "width": structureData["Bounds"]["Width"],
-        "height": structureData["Bounds"]["Height"],
-        "diagrams": diagrams,
-        "defaultFrame": structureData["Default Frame"]
+        top: structureData.position.top - parentPosition.top,
+        left: structureData.position.left - parentPosition.left,
+        width: structureData.bounds.width,
+        height: structureData.bounds.height,
+        diagrams: diagrams,
+        defaultFrame: structureData.defaultFrame
     };
 }
+
+/**
+ * Renders the nested structures and diagrams into HTML
+ * @param {Array} structures - Array of structures to render
+ * @returns {string} - HTML string representing the structures and diagrams
+ */
 function printStructures(structures) {
     let output = "";
     structures.forEach((structure) => {
-        let defaultFrame = structure["defaultFrame"];
+        let defaultFrame = structure.defaultFrame;
         const structureStyle = {
-            "top": structure.top + "px",
-            "left": structure.left + "px",
-            "width": structure.width + "px",
-            "height": structure.height + "px",
+            top: structure.top + "px",
+            left: structure.left + "px",
+            width: structure.width + "px",
+            height: structure.height + "px",
         };
         output += `<div 
             class="structure" style="${inlineStyleDict(structureStyle)}" 
@@ -245,9 +353,9 @@ function printStructures(structures) {
         >`;
         structure.diagrams.forEach((diagram, index) => {
             const diagramStyle = {
-                "width": structure.width + "px",
-                "height": structure.height + "px",
-                "background": `url(${diagram.image})`,
+                width: structure.width + "px",
+                height: structure.height + "px",
+                background: `url(${diagram.image})`,
             };
             output += `<div 
                 class="diagram${(index === defaultFrame) ? ' visible' : ''}" 
@@ -260,35 +368,77 @@ function printStructures(structures) {
     });
     return output;
 }
-let structureMap = {};
-let diagramMap = {};
-if (!rawData["Options"]["Disabled Tabs"].includes("BD")) {
-    rawData["Structure to Diagram"].forEach(item => {
-        structureMap[item.UID] = item["Diagram Group"];
-    });
-    rawData["Diagram to Structure"].forEach(item => {
-        diagramMap[item["Diagram UID"]] = item["Diagram Children"];
-    });
 
+// Get raw data from injected script or default
+const data = parseRawData(rawData);
+
+/**
+ * If Front Panel is not disabled, render it
+ */
+if (!data.options.disabledTabs.includes("FP")) {
     let structures = [];
-    rawData["Structure to Diagram"].forEach(item => {
-        let structureUID = item["UID"];
-        if (item["Diagram Group"]["Is on TLD?"]) {
-            structures.push(traverseStructure(structureUID, { "top": 0, "left": 0 }));
+    if (data.fp.tldUID in data.fp.diagramToStructures) {
+        data.fp.diagramToStructures[data.fp.tldUID].forEach(structureUID => {
+            structures.push(traverseStructure(data.fp.structureToDiagrams, data.fp.diagramToStructures, structureUID, { top: 0, left: 0 }));
+        });
+    }
+
+    let $fpContainer = document.getElementById("fp-container");
+    if (data.fp.image === "") {
+        let output = `<div class="empty-msg">Front Panel is empty</div>`;
+        $fpContainer.innerHTML = output;
+    } else {
+        let bgLeft = data.fp.position.left;
+        let bgTop = data.fp.position.top;
+        let bgWidth = data.fp.bounds.width;
+        let bgHeight = data.fp.bounds.height;
+        const fpStyle = {
+            left: bgLeft + "px",
+            top: bgTop + "px",
+            width: bgWidth + "px",
+            height: bgHeight + "px",
+            background: `url(${data.fp.image})`,
+        };
+        let output = `<div style="${inlineStyleDict(fpStyle)}"></div>` + printStructures(structures);
+        document.getElementById("top-level-fp").innerHTML = output;
+        if (bgLeft < 0) {
+            $fpContainer.style.left = (bgLeft * -1) + "px";
         }
-    });
+        if (bgTop < 0) {
+            $fpContainer.style.top = (bgTop * -1) + "px";
+        }
+    }
+    $fpContainer.style.backgroundColor = "#" + data.fp.color;
+}
+/**
+ * If Block Diagram is not disabled, render it
+ */
+if (!data.options.disabledTabs.includes("BD")) {
+    let structures = [];
+    if (data.bd.tldUID in data.bd.diagramToStructures) {
+        data.bd.diagramToStructures[data.bd.tldUID].forEach(structureUID => {
+            structures.push(traverseStructure(data.bd.structureToDiagrams, data.bd.diagramToStructures, structureUID, { top: 0, left: 0 }));
+        });
+    }
 
     let $bdContainer = document.getElementById("bd-container");
-    if (rawData["BD"]["Image"] === "") {
+    if (data.bd.image === "") {
         let output = `<div class="empty-msg">Block Diagram is empty</div>`;
         $bdContainer.innerHTML = output;
 
     } else {
-        let bgLeft = rawData["BD"]["Position"]["Left"];
-        let bgTop = rawData["BD"]["Position"]["Top"];
-        let bgWidth = rawData["BD"]["Bounds"]["Width"];
-        let bgHeight = rawData["BD"]["Bounds"]["Height"];
-        let output = `<div style="left:${bgLeft}px;top:${bgTop}px;width:${bgWidth}px;height:${bgHeight}px;background-image:url(${rawData["BD"]["Image"]})"></div>` + printStructures(structures);
+        let bgLeft = data.bd.position.left;
+        let bgTop = data.bd.position.top;
+        let bgWidth = data.bd.bounds.width;
+        let bgHeight = data.bd.bounds.height;
+        const bdStyle = {
+            left: bgLeft + "px",
+            top: bgTop + "px",
+            width: bgWidth + "px",
+            height: bgHeight + "px",
+            background: `url(${data.bd.image})`,
+        };
+        let output = `<div style="${inlineStyleDict(bdStyle)}"></div>` + printStructures(structures);
         document.getElementById("top-level-diagram").innerHTML = output;
         if (bgLeft < 0) {
             $bdContainer.style.left = (bgLeft * -1) + "px";
@@ -297,37 +447,36 @@ if (!rawData["Options"]["Disabled Tabs"].includes("BD")) {
             $bdContainer.style.top = (bgTop * -1) + "px";
         }
     }
-    document.body.style.backgroundColor = "#" + rawData["BD"]["Color"];
-
-    document.querySelectorAll(".structure").forEach(structureElem => {
-        structureElem.addEventListener("click", (event) => {
-            event.stopPropagation();
-            let diagrams = parseInt(structureElem.getAttribute("data-diagrams"));
-            let oldIndex = parseInt(structureElem.getAttribute("data-index"));
-            let newIndex = (oldIndex + 1) % diagrams;
-            structureElem.children[oldIndex].classList.remove("visible");
-            structureElem.children[newIndex].classList.add("visible");
-            structureElem.setAttribute("data-index", newIndex);
-        });
-    });
+    $bdContainer.style.backgroundColor = "#" + data.bd.color;
 }
+
+document.querySelectorAll(".structure").forEach(structureElem => {
+    structureElem.addEventListener("click", (event) => {
+        event.stopPropagation();
+        let diagrams = parseInt(structureElem.getAttribute("data-diagrams"));
+        let oldIndex = parseInt(structureElem.getAttribute("data-index"));
+        let newIndex = (oldIndex + 1) % diagrams;
+        structureElem.children[oldIndex].classList.remove("visible");
+        structureElem.children[newIndex].classList.add("visible");
+        structureElem.setAttribute("data-index", newIndex);
+    });
+});
 
 let $viInfoContainer = document.getElementById("vi-info-container");
 
-let metadata = rawData["Metadata"];
-document.title = metadata["VI Name"];
-let infoOutput = `<h2>${metadata["VI Name"]}</h2>`;
-if (metadata["Image"] !== "") {
-    infoOutput += `<img src="${metadata["Image"]}">`;
+document.title = data.metadata.name;
+let infoOutput = `<h2>${data.metadata.name}</h2>`;
+if (data.metadata.image !== "") {
+    infoOutput += `<img src="${data.metadata.image}">`;
 }
 infoOutput += `<h3>Description</h3>`;
-infoOutput += `<p>"${metadata["Description"].replace(/(\r\n|\n)/g, "<br />")}"</p>`;
+infoOutput += `<p>"${data.metadata.description.replace(/(\r\n|\n)/g, "<br />")}"</p>`;
 $viInfoContainer.innerHTML = infoOutput;
 
 let $tabContainer = document.getElementById("tab-container");
 document.querySelectorAll("#switcher button").forEach($btn => {
     let tabSelect = $btn.getAttribute("data-tab-select");
-    if (rawData["Options"]["Disabled Tabs"].includes(tabSelect)) {
+    if (data.options.disabledTabs.includes(tabSelect)) {
         $btn.setAttribute("disabled", true);
     }
     $btn.addEventListener("click", () => {
@@ -335,8 +484,8 @@ document.querySelectorAll("#switcher button").forEach($btn => {
     });
 });
 
-let defaultTab = rawData["Options"]["Default Tab"];
-if (rawData["Options"]["Disabled Tabs"].includes(defaultTab)) {
+let defaultTab = data.options.defaultTab;
+if (data.options.disabledTabs.includes(defaultTab)) {
     defaultTab = "Info";
 }
 $tabContainer.setAttribute("data-tab", defaultTab);
