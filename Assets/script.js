@@ -9,6 +9,16 @@ function inlineStyleDict(inlineObj) {
     }, "");
 }
 
+function setBodyBgColor(tab, data) {
+    if (tab === "FP") {
+        document.body.style.backgroundColor = "#" + data.fp.color;
+    } else if (tab === "BD") {
+        document.body.style.backgroundColor = "#" + data.bd.color;
+    } else {
+        document.body.style.backgroundColor = "#ffffff";
+    }
+}
+
 /**
  * Returns a VIData object parsed from raw data
  * @param {any} rawData - Raw data from either default-data.js or injected
@@ -229,7 +239,6 @@ if (!data.options.disabledTabs.includes("FP")) {
             $fpContainer.style.top = (bgTop * -1) + "px";
         }
     }
-    $fpContainer.style.backgroundColor = "#" + data.fp.color;
 }
 /**
  * If Block Diagram is not disabled, render it
@@ -268,7 +277,6 @@ if (!data.options.disabledTabs.includes("BD")) {
             $bdContainer.style.top = (bgTop * -1) + "px";
         }
     }
-    $bdContainer.style.backgroundColor = "#" + data.bd.color;
 }
 
 document.querySelectorAll(".structure").forEach(structureElem => {
@@ -302,6 +310,7 @@ document.querySelectorAll("#switcher button").forEach($btn => {
     }
     $btn.addEventListener("click", () => {
         $tabContainer.setAttribute("data-tab", tabSelect);
+        setBodyBgColor(tabSelect, data);
     });
 });
 
@@ -309,4 +318,5 @@ let defaultTab = data.options.defaultTab;
 if (data.options.disabledTabs.includes(defaultTab)) {
     defaultTab = "Info";
 }
+setBodyBgColor(defaultTab, data);
 $tabContainer.setAttribute("data-tab", defaultTab);
