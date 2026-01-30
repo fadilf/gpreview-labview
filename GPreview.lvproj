@@ -19,6 +19,7 @@
 		<Item Name="Typedefs" Type="Folder" URL="../Typedefs">
 			<Property Name="NI.DISK" Type="Bool">true</Property>
 		</Item>
+		<Item Name="ASCII to Base64.vi" Type="VI" URL="../ASCII to Base64.vi"/>
 		<Item Name="CLI.vi" Type="VI" URL="../CLI.vi"/>
 		<Item Name="Directory.vi" Type="VI" URL="../Directory.vi"/>
 		<Item Name="Earliest MultiFrameStructure Diagram UID.vi" Type="VI" URL="../Earliest MultiFrameStructure Diagram UID.vi"/>
