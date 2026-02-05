@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>.structure {
+    position: absolute;
+    overflow-y: hidden;
+    cursor: pointer;
+}
+
+.diagram {
+    display: none;
+}
+
+.diagram.visible {
+    display: block;
+}
+
+.structure:hover {
+    box-shadow: 2px 2px 8px -4px #000;
+    transition: 0.2s;
+}
+
+#top-level-fp,
+#top-level-diagram {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#top-level-fp > div,
+#top-level-diagram > div {
+    position: absolute;
+}
+
+#fp-container,
+#bd-container {
+    position: absolute;
+}
+
+#switcher {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background-color: #c8c8c8d4;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+#switcher::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #333;
+    border-radius: 5px;
+    transition: .3s;
+    left: 0;
+}
+
+#switcher button {
+    box-sizing: border-box;
+    border: 0;
+    background-color: transparent;
+    padding: 5px 7px;
+    font-size: 15px;
+    line-height: 23px;
+    display: inline-block;
+    height: 32px;
+    width: 40px;
+}
+
+#switcher button:enabled {
+    cursor: pointer;
+}
+
+#vi-info-container {
+    padding: 10px;
+}
+
+.empty-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#fp-container,
+#bd-container,
+#vi-info-container {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+
+#tab-container {
+    color: #292929;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#tab-container[data-tab=FP] #fp-container {
+    display: block;
+}
+
+#tab-container[data-tab=BD] #bd-container {
+    display: block;
+}
+
+#tab-container[data-tab=BD] #switcher::before {
+    left: 40px;
+}
+
+#tab-container[data-tab=Info] #vi-info-container {
+    display: block;
+}
+
+#tab-container[data-tab=Info] #switcher::before {
+    left: 80px;
+}
+
+.border {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+
+.border-top {
+    height: 1px;
+    bottom: auto;
+}
+
+.border-left {
+    width: 1px;
+    right: auto;
+}
+
+.border-bottom {
+    height: 1px;
+    top: auto;
+}
+
+.border-right {
+    width: 1px; 
+    left: auto;
+}</style>
+</head>
+
+<body>
+    <script>var rawData = {"FP":{"Bounds":{"Width":0,"Height":0},"Position":{"Left":0,"Top":0},"Color":"E2E2E2","Image":"","Page to PageSelectors":[],"PageSelector to Pages":[]},"BD":{"Bounds":{"Width":488,"Height":263},"Position":{"Left":10,"Top":10},"Color":"FFFFFF","Image":"data:image/png;base64,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","Structure to Diagram":[{"UID":43,"Diagram Group":{"Diagram Data":[{"UID":53,"Diagram Image":"data:image/png;base64,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"},{"UID":59,"Diagram Image":""}],"Position":{"Left":40,"Top":10},"Bounds":{"Width":458,"Height":263},"Default Frame":1}}],"Diagram to Structure":[{"Diagram UID":3,"Diagram Children":[43]}],"TLD UID":3},"Metadata":{"Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAfklEQVR42u2U0QpAIQhD/f+f7r6KzilUF4L5ZIEdJ02zH2JdCwEEOAkIGA8Ov9kfYZW/nAJ8Euph3gDyi1kBfDQPvATAOXAFlSzLbU4UwCqmQD4Q4Ahg+P9g0uwVaJl2VcBjabRsdNJUZewGwBvfVQA37WToRLp8IMBTgKvxATtDLVIw9DiVAAAAAElFTkSuQmCC","Description":"","VI Name":"Labels In Structures.vi"},"Options":{"Disabled Tabs":[],"Default Tab":"FP"}};</script>
+    <div class="borders">
+        <div class="border border-top"></div>
+        <div class="border border-bottom"></div>
+        <div class="border border-left"></div>
+        <div class="border border-right"></div>
+    </div>
+    <div id="tab-container" data-tab="FP">
+        <div id="switcher"><button data-tab-select="FP">FP</button><button data-tab-select="BD">BD</button><button
+                data-tab-select="Info">Info</button></div>
+        <div id="fp-container">
+            <div id="top-level-fp"></div>
+        </div>
+        <div id="bd-container">
+            <div id="top-level-diagram"></div>
+        </div>
+        <div id="vi-info-container"></div>
+    </div>
+    <script>/**
+ * Converts an object of style properties to an inline style string
+ * @param {} inlineObj - object of styles properties
+ * @returns {string} - inline style string
+ */
+function inlineStyleDict(inlineObj) {
+    return Object.entries(inlineObj).reduce((acc, [key, value]) => {
+        return `${acc}${key}:${value};`;
+    }, "");
+}
+
+function setBodyBgColor(tab, data) {
+    if (tab === "FP") {
+        document.body.style.backgroundColor = "#" + data.fp.color;
+    } else if (tab === "BD") {
+        document.body.style.backgroundColor = "#" + data.bd.color;
+    } else {
+        document.body.style.backgroundColor = "#ffffff";
+    }
+}
+
+/**
+ * Returns a VIData object parsed from raw data
+ * @param {any} rawData - Raw data from either default-data.js or injected
+ * @returns {VIData}
+ */
+function parseRawData(rawData) {
+    let fp = rawData["FP"];
+    let bd = rawData["BD"];
+    let options = rawData["Options"];
+    let metadata = rawData["Metadata"];
+    return {
+        fp: {
+            color: fp["Color"],
+            image: fp["Image"],
+            bounds: {
+                width: fp["Bounds"]["Width"],
+                height: fp["Bounds"]["Height"],
+            },
+            position: {
+                left: fp["Position"]["Left"],
+                top: fp["Position"]["Top"],
+            },
+            tldUID: "-1-0",
+            structureToDiagrams: fp["PageSelector to Pages"].reduce((acc, item) => {
+                const pgData = item["PageSelector Data"];
+                acc[item["UID"]] = {
+                    position: {
+                        left: pgData["Position"]["Left"],
+                        top: pgData["Position"]["Top"],
+                    },
+                    bounds: {
+                        width: pgData["Bounds"]["Width"],
+                        height: pgData["Bounds"]["Height"],
+                    },
+                    defaultFrame: pgData["Default Page"],
+                    diagramData: pgData["Page Images"].map((page, index) => ({
+                        uid: item["UID"] + "-" + index,
+                        diagramImage: page,
+                    })),
+                };
+                return acc;
+            }, {}),
+            diagramToStructures: fp["Page to PageSelectors"].reduce((acc, item) => {
+                const pageUID = item["PageSelector"]["UID"] + "-" + item["PageSelector"]["Page Index"];
+                acc[pageUID] = item["PageSelector UID"];
+                return acc;
+            }, {}),
+        },
+        bd: {
+            color: bd["Color"],
+            image: bd["Image"],
+            bounds: {
+                width: bd["Bounds"]["Width"],
+                height: bd["Bounds"]["Height"],
+            },
+            position: {
+                left: bd["Position"]["Left"],
+                top: bd["Position"]["Top"],
+            },
+            tldUID: bd["TLD UID"],
+            structureToDiagrams: bd["Structure to Diagram"].reduce((acc, item) => {
+                const diagramGroup = item["Diagram Group"];
+                acc[item["UID"]] = {
+                    position: {
+                        top: diagramGroup["Position"]["Top"],
+                        left: diagramGroup["Position"]["Left"],
+                    },
+                    bounds: {
+                        width: diagramGroup["Bounds"]["Width"],
+                        height: diagramGroup["Bounds"]["Height"],
+                    },
+                    defaultFrame: diagramGroup["Default Frame"],
+                    diagramData: diagramGroup["Diagram Data"].map(diagram => ({
+                        uid: diagram["UID"],
+                        diagramImage: diagram["Diagram Image"],
+                    })),
+                };
+                return acc;
+            }, {}),
+            diagramToStructures: bd["Diagram to Structure"].reduce((acc, item) => {
+                acc[item["Diagram UID"]] = item["Diagram Children"];
+                return acc;
+            }, {}),
+        },
+        metadata: {
+            name: metadata["VI Name"],
+            description: metadata["Description"],
+            image: metadata["Image"],
+        },
+        options: {
+            defaultTab: options["Default Tab"],
+            disabledTabs: options["Disabled Tabs"],
+        }
+    };
+}
+
+/**
+ * Traverses the diagram and structure data to build a nested structure
+ * @param {Object} structureToDiagrams - Mapping of structure UIDs to their data
+ * @param {Object} diagramToStructures - Mapping of diagram UIDs to their child structures
+ * @param {string} diagramUID - The UID of the current diagram to traverse
+ * @param {Object} parentPosition - The position of the parent structure for relative positioning
+ * @returns {Array} - Array of nested structures
+ */
+function traverseDiagram(structureToDiagrams, diagramToStructures, diagramUID, parentPosition) {
+    if (diagramUID in diagramToStructures) {
+        return diagramToStructures[diagramUID].map(structureUID => traverseStructure(structureToDiagrams, diagramToStructures, structureUID, parentPosition));
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Traverses a structure and its associated diagrams recursively
+ * @param {Object} structureToDiagrams - Mapping of structure UIDs to their data
+ * @param {Object} diagramToStructures - Mapping of diagram UIDs to their child structures
+ * @param {string} structureUID - The UID of the current structure to traverse
+ * @param {Object} parentPosition - The position of the parent structure for relative positioning
+ * @returns {Object} - The nested structure with its diagrams and child structures
+ */
+function traverseStructure(structureToDiagrams, diagramToStructures, structureUID, parentPosition) {
+    let structureData = structureToDiagrams[structureUID];
+    let diagrams = [];
+    let currentPosition = {
+        top: structureData.position.top,
+        left: structureData.position.left
+    };
+    structureData.diagramData.forEach(diagram => {
+        diagrams.push({
+            image: diagram.diagramImage,
+            structures: traverseDiagram(structureToDiagrams, diagramToStructures, diagram.uid, currentPosition)
+        });
+    });
+    return {
+        top: structureData.position.top - parentPosition.top,
+        left: structureData.position.left - parentPosition.left,
+        width: structureData.bounds.width,
+        height: structureData.bounds.height,
+        diagrams: diagrams,
+        defaultFrame: structureData.defaultFrame
+    };
+}
+
+/**
+ * Renders the nested structures and diagrams into HTML
+ * @param {Array} structures - Array of structures to render
+ * @returns {string} - HTML string representing the structures and diagrams
+ */
+function printStructures(structures) {
+    let output = "";
+    structures.forEach((structure) => {
+        let defaultFrame = structure.defaultFrame;
+        const structureStyle = {
+            top: structure.top + "px",
+            left: structure.left + "px",
+            width: structure.width + "px",
+            height: structure.height + "px",
+        };
+        output += `<div 
+            class="structure" style="${inlineStyleDict(structureStyle)}" 
+            data-diagrams="${structure.diagrams.length}"
+            data-index="${defaultFrame}"
+        >`;
+        structure.diagrams.forEach((diagram, index) => {
+            const diagramStyle = {
+                width: structure.width + "px",
+                height: structure.height + "px",
+                background: `url(${diagram.image})`,
+            };
+            output += `<div 
+                class="diagram${(index === defaultFrame) ? ' visible' : ''}" 
+                style="${inlineStyleDict(diagramStyle)}"
+            >`;
+            output += printStructures(diagram.structures);
+            output += '</div>';
+        });
+        output += `</div>`;
+    });
+    return output;
+}
+
+// Get raw data from injected script or default
+const data = parseRawData(rawData);
+
+/**
+ * If Front Panel is not disabled, render it
+ */
+if (!data.options.disabledTabs.includes("FP")) {
+    let structures = [];
+    if (data.fp.tldUID in data.fp.diagramToStructures) {
+        data.fp.diagramToStructures[data.fp.tldUID].forEach(structureUID => {
+            structures.push(traverseStructure(data.fp.structureToDiagrams, data.fp.diagramToStructures, structureUID, { top: 0, left: 0 }));
+        });
+    }
+
+    let $fpContainer = document.getElementById("fp-container");
+    if (data.fp.image === "") {
+        let output = `<div class="empty-msg">Front Panel is empty</div>`;
+        $fpContainer.innerHTML = output;
+    } else {
+        let bgLeft = data.fp.position.left;
+        let bgTop = data.fp.position.top;
+        let bgWidth = data.fp.bounds.width;
+        let bgHeight = data.fp.bounds.height;
+        const fpStyle = {
+            left: bgLeft + "px",
+            top: bgTop + "px",
+            width: bgWidth + "px",
+            height: bgHeight + "px",
+            background: `url(${data.fp.image})`,
+        };
+        let output = `<div style="${inlineStyleDict(fpStyle)}"></div>` + printStructures(structures);
+        document.getElementById("top-level-fp").innerHTML = output;
+        if (bgLeft < 0) {
+            $fpContainer.style.left = (bgLeft * -1) + "px";
+        }
+        if (bgTop < 0) {
+            $fpContainer.style.top = (bgTop * -1) + "px";
+        }
+    }
+}
+/**
+ * If Block Diagram is not disabled, render it
+ */
+if (!data.options.disabledTabs.includes("BD")) {
+    let structures = [];
+    if (data.bd.tldUID in data.bd.diagramToStructures) {
+        data.bd.diagramToStructures[data.bd.tldUID].forEach(structureUID => {
+            structures.push(traverseStructure(data.bd.structureToDiagrams, data.bd.diagramToStructures, structureUID, { top: 0, left: 0 }));
+        });
+    }
+
+    let $bdContainer = document.getElementById("bd-container");
+    if (data.bd.image === "") {
+        let output = `<div class="empty-msg">Block Diagram is empty</div>`;
+        $bdContainer.innerHTML = output;
+
+    } else {
+        let bgLeft = data.bd.position.left;
+        let bgTop = data.bd.position.top;
+        let bgWidth = data.bd.bounds.width;
+        let bgHeight = data.bd.bounds.height;
+        const bdStyle = {
+            left: bgLeft + "px",
+            top: bgTop + "px",
+            width: bgWidth + "px",
+            height: bgHeight + "px",
+            background: `url(${data.bd.image})`,
+        };
+        let output = `<div style="${inlineStyleDict(bdStyle)}"></div>` + printStructures(structures);
+        document.getElementById("top-level-diagram").innerHTML = output;
+        if (bgLeft < 0) {
+            $bdContainer.style.left = (bgLeft * -1) + "px";
+        }
+        if (bgTop < 0) {
+            $bdContainer.style.top = (bgTop * -1) + "px";
+        }
+    }
+}
+
+document.querySelectorAll(".structure").forEach(structureElem => {
+    structureElem.addEventListener("click", (event) => {
+        event.stopPropagation();
+        let diagrams = parseInt(structureElem.getAttribute("data-diagrams"));
+        let oldIndex = parseInt(structureElem.getAttribute("data-index"));
+        let newIndex = (oldIndex + 1) % diagrams;
+        structureElem.children[oldIndex].classList.remove("visible");
+        structureElem.children[newIndex].classList.add("visible");
+        structureElem.setAttribute("data-index", newIndex);
+    });
+});
+
+let $viInfoContainer = document.getElementById("vi-info-container");
+
+document.title = data.metadata.name;
+let infoOutput = `<h2>${data.metadata.name}</h2>`;
+if (data.metadata.image !== "") {
+    infoOutput += `<img src="${data.metadata.image}">`;
+}
+infoOutput += `<h3>Description</h3>`;
+infoOutput += `<p>"${data.metadata.description.replace(/(\r\n|\n)/g, "<br />")}"</p>`;
+$viInfoContainer.innerHTML = infoOutput;
+
+let $tabContainer = document.getElementById("tab-container");
+document.querySelectorAll("#switcher button").forEach($btn => {
+    let tabSelect = $btn.getAttribute("data-tab-select");
+    if (data.options.disabledTabs.includes(tabSelect)) {
+        $btn.setAttribute("disabled", true);
+    }
+    $btn.addEventListener("click", () => {
+        $tabContainer.setAttribute("data-tab", tabSelect);
+        setBodyBgColor(tabSelect, data);
+    });
+});
+
+let defaultTab = data.options.defaultTab;
+if (data.options.disabledTabs.includes(defaultTab)) {
+    defaultTab = "Info";
+}
+setBodyBgColor(defaultTab, data);
+$tabContainer.setAttribute("data-tab", defaultTab);
+</script>
+</body>
+
+</html>
