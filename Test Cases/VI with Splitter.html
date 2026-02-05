@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>.structure {
+    position: absolute;
+    overflow-y: hidden;
+    cursor: pointer;
+}
+
+.diagram {
+    display: none;
+}
+
+.diagram.visible {
+    display: block;
+}
+
+.structure:hover {
+    box-shadow: 2px 2px 8px -4px #000;
+    transition: 0.2s;
+}
+
+#top-level-fp,
+#top-level-diagram {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#top-level-fp > div,
+#top-level-diagram > div {
+    position: absolute;
+}
+
+#fp-container,
+#bd-container {
+    position: absolute;
+}
+
+#switcher {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background-color: #c8c8c8d4;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+#switcher::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #333;
+    border-radius: 5px;
+    transition: .3s;
+    left: 0;
+}
+
+#switcher button {
+    box-sizing: border-box;
+    border: 0;
+    background-color: transparent;
+    padding: 5px 7px;
+    font-size: 15px;
+    line-height: 23px;
+    display: inline-block;
+    height: 32px;
+    width: 40px;
+}
+
+#switcher button:enabled {
+    cursor: pointer;
+}
+
+#vi-info-container {
+    padding: 10px;
+}
+
+.empty-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#fp-container,
+#bd-container,
+#vi-info-container {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+
+#tab-container {
+    color: #292929;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+#tab-container[data-tab=FP] #fp-container {
+    display: block;
+}
+
+#tab-container[data-tab=BD] #bd-container {
+    display: block;
+}
+
+#tab-container[data-tab=BD] #switcher::before {
+    left: 40px;
+}
+
+#tab-container[data-tab=Info] #vi-info-container {
+    display: block;
+}
+
+#tab-container[data-tab=Info] #switcher::before {
+    left: 80px;
+}
+
+.border {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+
+.border-top {
+    height: 1px;
+    bottom: auto;
+}
+
+.border-left {
+    width: 1px;
+    right: auto;
+}
+
+.border-bottom {
+    height: 1px;
+    top: auto;
+}
+
+.border-right {
+    width: 1px; 
+    left: auto;
+}</style>
+</head>
+
+<body>
+    <script>var rawData = {"FP":{"Bounds":{"Width":1090,"Height":622},"Position":{"Left":0,"Top":0},"Color":"BCBCBC","Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABEIAAAJuCAMAAACDolc8AAADAFBMVEX//////8z//5n//2b//zP//wD/zP//zMz/zJn/zGb/zDP/zAD/mf//mcz/mZn/mWb/mTP/mQD/Zv//Zsz/Zpn/Zmb/ZjP/ZgD/M///M8z/M5n/M2b/MzP/MwD/AP//AMz/AJn/AGb/ADP/AADM///M/8zM/5nM/2bM/zPM/wDMzP/MzMzMzJnMzGbMzDPMzADMmf/MmczMmZnMmWbMmTPMmQDMZv/MZszMZpnMZmbMZjPMZgDMM//MM8zMM5nMM2bMMzPMMwDMAP/MAMzMAJnMAGbMADPMAACZ//+Z/8yZ/5mZ/2aZ/zOZ/wCZzP+ZzMyZzJmZzGaZzDOZzACZmf+ZmcyZmZmZmWaZmTOZmQCZZv+ZZsyZZpmZZmaZZjOZZgCZM/+ZM8yZM5mZM2aZMzOZMwCZAP+ZAMyZAJmZAGaZADOZAABm//9m/8xm/5lm/2Zm/zNm/wBmzP9mzMxmzJlmzGZmzDNmzABmmf9mmcxmmZlmmWZmmTNmmQBmZv9mZsxmZplmZmZmZjNmZgBmM/9mM8xmM5lmM2ZmMzNmMwBmAP9mAMxmAJlmAGZmADNmAAAz//8z/8wz/5kz/2Yz/zMz/wAzzP8zzMwzzJkzzGYzzDMzzAAzmf8zmcwzmZkzmWYzmTMzmQAzZv8zZswzZpkzZmYzZjMzZgAzM/8zM8wzM5kzM2YzMzMzMwAzAP8zAMwzAJkzAGYzADMzAAAA//8A/8wA/5kA/2YA/zMA/wAAzP8AzMwAzJkAzGYAzDMAzAAAmf8AmcwAmZkAmWYAmTMAmQAAZv8AZswAZpkAZmYAZjMAZgAAM/8AM8wAM5kAM2YAMzMAMwAAAP8AAMwAAJkAAGYAADPuAADdAAC7AACqAACIAAB3AABVAABEAAAiAAARAAAA7gAA3QAAuwAAqgAAiAAAdwAAVQAARAAAIgAAEQAAAO4AAN0AALsAAKoAAIgAAHcAAFUAAEQAACIAABHu7u7d3d27u7uqqqqIiIh3d3dVVVVEREQiIiIREREAAAD7CIKZAAAHv0lEQVR42u3aMVLbQABAUd1HW2HfQzSE0k18CJehj3wCcwA640uoojNH0dBtvCLOwCCDWUaK47w3Y3YMbpB3/uzubNECZCs8AkBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAJAZAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAJAZAQQEIACQEkBEBCAAn5okmM22r/JtxXJgBIyPHCumrDVailAyQkZxHyUKaQSAhISNYqZLlKP2JsQn2zvayrUF/HmH63ibfCAhLygXIeF90qJMVkN4Zl0062u2HRTh8lBCTkw4XIZtEl5Pm1H+5K2xuQkGNMGwkBCclyUe22MquehNjIgIQcsYtJJ6ltO4vN64Sk+yKOU0FCvpKXtYSAhGSbdXdGAAn5tHL+8uI7ICGAhAASAkjIWShHYEohIRKiICAhfQl5Gph9IRIiIfkcLSEh556QYkBOp5EQCZEQkBAJAQmREJAQCQEJkRAJAQmREJAQCQEJkRCQEAmRECREQiQEJERCQEIkBCREQkBCJERCQEIkBCREQkBCTiUhHieY8/kJ8YWDhOQnpCiG3ceAhABICCAhgIQAEgIgIYCEABICSAggIQASAkgIICGAhABICCAhgIQAEgIgIYCEABICSAggIQASAkgIICGAhABICCAhgIQAEgIgIYCEABICSAggIQASAkgIICGAhABICCAhgIQAEgJIiEcASAggIYCEABICICGAhAASAkgIgIQAEgJICCAhgIQASAggIYCEABICICGAhAASAkgIgIQAEgJICCAhgIQASAggIYCEABICICGAhAASAkgIgIQAEgJICCAhgIQASAggIYCEABICICGAhAASAkgIICEAEgJICCAhgISc3T87AlMKCQGQEEBCAAkBJARAQgAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAn568oRmFJIiIRICEiIhICESAhIyKl4GoEphYScrW8jMKWQEAmREJCQt36MwJRCQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAJAZAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQgAJAZAQQEIACQEkBEBCAAkBJASQEAAJASQEkBBAQv4Bkxi31f5NuK/efmIW48q0AAnpE9ZVG65CXR3+xFX73p+B/zkhk4cyZeL9RpTfJQQkpHeNsVylHzE2ob7ZXtZVqK+7jUvYxNt9WMJPCQEJ6V9hzOOiW4WkmOzGsGzayXY3LNrp4+9yzJyFgIQcXIhsFl1Cnl/74a7cb2/KuYKAhBw2bd5LiIMQkJCDLqq0yuhJyJ+NzKQxJ0BCDu1i0klquvvRvE5Iui/yfJw6jdHFEJCQjLysbWFAQrLNujsjgIR8Wjl/efEdkBBAQgAJASTkLJQjMKWQEAlREJCQvoQ8Dcy+EAmRkHyOlpCQc09IMSCn00iIhEgISIiEgIRICEiIhICESIiEgIRICEiIhICESAhIiIRICBIiIRICEiIhICESAhIiISAhEiIhICESAhIiISAhp5IQjxPM+fyE+MJBQvITUhTD7mNAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQEkxCMAJASQEEBCAAkBkBBAQgAJASQEQEIACQEkBJAQQEIAJASQEEBCAAkBkBBAQgAJASQEQEIACQEkBJAQQEIAJASQEEBCAAkBkBBAQgAJASQEQEIACQEkBJAQQEIAJASQEEBCAAkBkBBAQgAJASQEkBAACQEkBJAQQEIAJASQEEBCAAkBkBBAQgAJASQEkBAACQEkBJAQQEIAJASQEEBCAAkBkBBAQgAJASQEkBAACQEkBJAQQEIAJASQEEBCAAkBJARAQgAJASQEkBAACQEkBJAQQEIAJASQEEBCAAkBJARAQgAJASQEkBAACQEkBJAQQEIAJASQEEBCAAkBJARAQgAJASQEkBAACQEkBJAQQEIACQGQEEBCAAkBJARAQgAJASQEkBAACQEkBJAQQEIACQGQEEBCAAkBJARAQgAJASQEkBAACQEkBJAQQEIACQGQEEBCAAkBJARAQgAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJARAQgAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJARAQgAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBJAQQEIACQGQEEBCAAkBJASQEAAJASQEkBBAQgAkBBjGL54LUH6wHtJ/AAAAAElFTkSuQmCC","Page to PageSelectors":[],"PageSelector to Pages":[]},"BD":{"Bounds":{"Width":75,"Height":281},"Position":{"Left":10,"Top":10},"Color":"FFFFFF","Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAAEZCAMAAADooSiQAAADAFBMVEX//////8z//5n//2b//zP//wD/zP//zMz/zJn/zGb/zDP/zAD/mf//mcz/mZn/mWb/mTP/mQD/Zv//Zsz/Zpn/Zmb/ZjP/ZgD/M///M8z/M5n/M2b/MzP/MwD/AP//AMz/AJn/AGb/ADP/AADM///M/8zM/5nM/2bM/zPM/wDMzP/MzMzMzJnMzGbMzDPMzADMmf/MmczMmZnMmWbMmTPMmQDMZv/MZszMZpnMZmbMZjPMZgDMM//MM8zMM5nMM2bMMzPMMwDMAP/MAMzMAJnMAGbMADPMAACZ//+Z/8yZ/5mZ/2aZ/zOZ/wCZzP+ZzMyZzJmZzGaZzDOZzACZmf+ZmcyZmZmZmWaZmTOZmQCZZv+ZZsyZZpmZZmaZZjOZZgCZM/+ZM8yZM5mZM2aZMzOZMwCZAP+ZAMyZAJmZAGaZADOZAABm//9m/8xm/5lm/2Zm/zNm/wBmzP9mzMxmzJlmzGZmzDNmzABmmf9mmcxmmZlmmWZmmTNmmQBmZv9mZsxmZplmZmZmZjNmZgBmM/9mM8xmM5lmM2ZmMzNmMwBmAP9mAMxmAJlmAGZmADNmAAAz//8z/8wz/5kz/2Yz/zMz/wAzzP8zzMwzzJkzzGYzzDMzzAAzmf8zmcwzmZkzmWYzmTMzmQAzZv8zZswzZpkzZmYzZjMzZgAzM/8zM8wzM5kzM2YzMzMzMwAzAP8zAMwzAJkzAGYzADMzAAAA//8A/8wA/5kA/2YA/zMA/wAAzP8AzMwAzJkAzGYAzDMAzAAAmf8AmcwAmZkAmWYAmTMAmQAAZv8AZswAZpkAZmYAZjMAZgAAM/8AM8wAM5kAM2YAMzMAMwAAAP8AAMwAAJkAAGYAADPuAADdAAC7AACqAACIAAB3AABVAABEAAAiAAARAAAA7gAA3QAAuwAAqgAAiAAAdwAAVQAARAAAIgAAEQAAAO4AAN0AALsAAKoAAIgAAHcAAFUAAEQAACIAABHu7u7d3d27u7uqqqqIiIh3d3dVVVVEREQiIiIREREAAAD7CIKZAAABm0lEQVR42u3cP07DMByG4Z83R+IAnTKZG3TrHbJyAXqBHIGd9ATlAGzQQ2TrFk5TydhOWuQkxEYEsbyPKFUr9av/dvxE8pUJ8m9Zc+/eDTabH2bNjGbTG2UV1nbm+kK/V3NZ341rlKXfjOhKNdXSuKYzDlGXUVZx9oPKyQoxcdYlzlKHo/9nbauap+6+cUN8sNa9p0/2xX/D17h8zrBzbr1mskTtbR3G5VPdszq0UnRGHWrZflTRuMphJ9zfMK7LeB/1qQ5Z/WN40q+mn/k1q5SZrOmZ2LYZWf30Fueo3Sf3x2nWdI7TMzHex7DsIjvbxln+3N3WPvesLvBnb607tDubVe62Oyr93VrzdwIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAx+uVCVqpWzleC+Qq2jH65ZK1cKCxrqpx+uWStnKceq5x+uWStXMh6Nln9cqlaubBi0Xot9cst18r5bzuK5PbLLdbK9YslOf1yyVo5KVqJs6ZnYtjHZK2cbK0Nm/G7frlQK7fSHQq1civc7Vut3J/8TqR8AqIT/AS347ANAAAAAElFTkSuQmCC","Structure to Diagram":[],"Diagram to Structure":[],"TLD UID":3},"Metadata":{"Image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAfklEQVR42u2USw4AIQhDuf+lna1pK2hGJpmkrIxBHpVPxAc22swAAxoBcwdDN8/+0qEGwA2EZgA/2VXAaq4BVinfASQpc3leKfAcGHAE4HGXncrOSRMjgGPxOdkWchrqjQZx4bBSoAFSqdSXZ83fEPsbVNagLKTnwIA/AFrtAZN7Vyg1yRUjAAAAAElFTkSuQmCC","Description":"","VI Name":"VI with Splitter.vi"},"Options":{"Disabled Tabs":[],"Default Tab":"FP"}};</script>
+    <div class="borders">
+        <div class="border border-top"></div>
+        <div class="border border-bottom"></div>
+        <div class="border border-left"></div>
+        <div class="border border-right"></div>
+    </div>
+    <div id="tab-container" data-tab="FP">
+        <div id="switcher"><button data-tab-select="FP">FP</button><button data-tab-select="BD">BD</button><button
+                data-tab-select="Info">Info</button></div>
+        <div id="fp-container">
+            <div id="top-level-fp"></div>
+        </div>
+        <div id="bd-container">
+            <div id="top-level-diagram"></div>
+        </div>
+        <div id="vi-info-container"></div>
+    </div>
+    <script>/**
+ * Converts an object of style properties to an inline style string
+ * @param {} inlineObj - object of styles properties
+ * @returns {string} - inline style string
+ */
+function inlineStyleDict(inlineObj) {
+    return Object.entries(inlineObj).reduce((acc, [key, value]) => {
+        return `${acc}${key}:${value};`;
+    }, "");
+}
+
+function setBodyBgColor(tab, data) {
+    if (tab === "FP") {
+        document.body.style.backgroundColor = "#" + data.fp.color;
+    } else if (tab === "BD") {
+        document.body.style.backgroundColor = "#" + data.bd.color;
+    } else {
+        document.body.style.backgroundColor = "#ffffff";
+    }
+}
+
+/**
+ * Returns a VIData object parsed from raw data
+ * @param {any} rawData - Raw data from either default-data.js or injected
+ * @returns {VIData}
+ */
+function parseRawData(rawData) {
+    let fp = rawData["FP"];
+    let bd = rawData["BD"];
+    let options = rawData["Options"];
+    let metadata = rawData["Metadata"];
+    return {
+        fp: {
+            color: fp["Color"],
+            image: fp["Image"],
+            bounds: {
+                width: fp["Bounds"]["Width"],
+                height: fp["Bounds"]["Height"],
+            },
+            position: {
+                left: fp["Position"]["Left"],
+                top: fp["Position"]["Top"],
+            },
+            tldUID: "-1-0",
+            structureToDiagrams: fp["PageSelector to Pages"].reduce((acc, item) => {
+                const pgData = item["PageSelector Data"];
+                acc[item["UID"]] = {
+                    position: {
+                        left: pgData["Position"]["Left"],
+                        top: pgData["Position"]["Top"],
+                    },
+                    bounds: {
+                        width: pgData["Bounds"]["Width"],
+                        height: pgData["Bounds"]["Height"],
+                    },
+                    defaultFrame: pgData["Default Page"],
+                    diagramData: pgData["Page Images"].map((page, index) => ({
+                        uid: item["UID"] + "-" + index,
+                        diagramImage: page,
+                    })),
+                };
+                return acc;
+            }, {}),
+            diagramToStructures: fp["Page to PageSelectors"].reduce((acc, item) => {
+                const pageUID = item["PageSelector"]["UID"] + "-" + item["PageSelector"]["Page Index"];
+                acc[pageUID] = item["PageSelector UID"];
+                return acc;
+            }, {}),
+        },
+        bd: {
+            color: bd["Color"],
+            image: bd["Image"],
+            bounds: {
+                width: bd["Bounds"]["Width"],
+                height: bd["Bounds"]["Height"],
+            },
+            position: {
+                left: bd["Position"]["Left"],
+                top: bd["Position"]["Top"],
+            },
+            tldUID: bd["TLD UID"],
+            structureToDiagrams: bd["Structure to Diagram"].reduce((acc, item) => {
+                const diagramGroup = item["Diagram Group"];
+                acc[item["UID"]] = {
+                    position: {
+                        top: diagramGroup["Position"]["Top"],
+                        left: diagramGroup["Position"]["Left"],
+                    },
+                    bounds: {
+                        width: diagramGroup["Bounds"]["Width"],
+                        height: diagramGroup["Bounds"]["Height"],
+                    },
+                    defaultFrame: diagramGroup["Default Frame"],
+                    diagramData: diagramGroup["Diagram Data"].map(diagram => ({
+                        uid: diagram["UID"],
+                        diagramImage: diagram["Diagram Image"],
+                    })),
+                };
+                return acc;
+            }, {}),
+            diagramToStructures: bd["Diagram to Structure"].reduce((acc, item) => {
+                acc[item["Diagram UID"]] = item["Diagram Children"];
+                return acc;
+            }, {}),
+        },
+        metadata: {
+            name: metadata["VI Name"],
+            description: metadata["Description"],
+            image: metadata["Image"],
+        },
+        options: {
+            defaultTab: options["Default Tab"],
+            disabledTabs: options["Disabled Tabs"],
+        }
+    };
+}
+
+/**
+ * Traverses the diagram and structure data to build a nested structure
+ * @param {Object} structureToDiagrams - Mapping of structure UIDs to their data
+ * @param {Object} diagramToStructures - Mapping of diagram UIDs to their child structures
+ * @param {string} diagramUID - The UID of the current diagram to traverse
+ * @param {Object} parentPosition - The position of the parent structure for relative positioning
+ * @returns {Array} - Array of nested structures
+ */
+function traverseDiagram(structureToDiagrams, diagramToStructures, diagramUID, parentPosition) {
+    if (diagramUID in diagramToStructures) {
+        return diagramToStructures[diagramUID].map(structureUID => traverseStructure(structureToDiagrams, diagramToStructures, structureUID, parentPosition));
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Traverses a structure and its associated diagrams recursively
+ * @param {Object} structureToDiagrams - Mapping of structure UIDs to their data
+ * @param {Object} diagramToStructures - Mapping of diagram UIDs to their child structures
+ * @param {string} structureUID - The UID of the current structure to traverse
+ * @param {Object} parentPosition - The position of the parent structure for relative positioning
+ * @returns {Object} - The nested structure with its diagrams and child structures
+ */
+function traverseStructure(structureToDiagrams, diagramToStructures, structureUID, parentPosition) {
+    let structureData = structureToDiagrams[structureUID];
+    let diagrams = [];
+    let currentPosition = {
+        top: structureData.position.top,
+        left: structureData.position.left
+    };
+    structureData.diagramData.forEach(diagram => {
+        diagrams.push({
+            image: diagram.diagramImage,
+            structures: traverseDiagram(structureToDiagrams, diagramToStructures, diagram.uid, currentPosition)
+        });
+    });
+    return {
+        top: structureData.position.top - parentPosition.top,
+        left: structureData.position.left - parentPosition.left,
+        width: structureData.bounds.width,
+        height: structureData.bounds.height,
+        diagrams: diagrams,
+        defaultFrame: structureData.defaultFrame
+    };
+}
+
+/**
+ * Renders the nested structures and diagrams into HTML
+ * @param {Array} structures - Array of structures to render
+ * @returns {string} - HTML string representing the structures and diagrams
+ */
+function printStructures(structures) {
+    let output = "";
+    structures.forEach((structure) => {
+        let defaultFrame = structure.defaultFrame;
+        const structureStyle = {
+            top: structure.top + "px",
+            left: structure.left + "px",
+            width: structure.width + "px",
+            height: structure.height + "px",
+        };
+        output += `<div 
+            class="structure" style="${inlineStyleDict(structureStyle)}" 
+            data-diagrams="${structure.diagrams.length}"
+            data-index="${defaultFrame}"
+        >`;
+        structure.diagrams.forEach((diagram, index) => {
+            const diagramStyle = {
+                width: structure.width + "px",
+                height: structure.height + "px",
+                background: `url(${diagram.image})`,
+            };
+            output += `<div 
+                class="diagram${(index === defaultFrame) ? ' visible' : ''}" 
+                style="${inlineStyleDict(diagramStyle)}"
+            >`;
+            output += printStructures(diagram.structures);
+            output += '</div>';
+        });
+        output += `</div>`;
+    });
+    return output;
+}
+
+// Get raw data from injected script or default
+const data = parseRawData(rawData);
+
+/**
+ * If Front Panel is not disabled, render it
+ */
+if (!data.options.disabledTabs.includes("FP")) {
+    let structures = [];
+    if (data.fp.tldUID in data.fp.diagramToStructures) {
+        data.fp.diagramToStructures[data.fp.tldUID].forEach(structureUID => {
+            structures.push(traverseStructure(data.fp.structureToDiagrams, data.fp.diagramToStructures, structureUID, { top: 0, left: 0 }));
+        });
+    }
+
+    let $fpContainer = document.getElementById("fp-container");
+    if (data.fp.image === "") {
+        let output = `<div class="empty-msg">Front Panel is empty</div>`;
+        $fpContainer.innerHTML = output;
+    } else {
+        let bgLeft = data.fp.position.left;
+        let bgTop = data.fp.position.top;
+        let bgWidth = data.fp.bounds.width;
+        let bgHeight = data.fp.bounds.height;
+        const fpStyle = {
+            left: bgLeft + "px",
+            top: bgTop + "px",
+            width: bgWidth + "px",
+            height: bgHeight + "px",
+            background: `url(${data.fp.image})`,
+        };
+        let output = `<div style="${inlineStyleDict(fpStyle)}"></div>` + printStructures(structures);
+        document.getElementById("top-level-fp").innerHTML = output;
+        if (bgLeft < 0) {
+            $fpContainer.style.left = (bgLeft * -1) + "px";
+        }
+        if (bgTop < 0) {
+            $fpContainer.style.top = (bgTop * -1) + "px";
+        }
+    }
+}
+/**
+ * If Block Diagram is not disabled, render it
+ */
+if (!data.options.disabledTabs.includes("BD")) {
+    let structures = [];
+    if (data.bd.tldUID in data.bd.diagramToStructures) {
+        data.bd.diagramToStructures[data.bd.tldUID].forEach(structureUID => {
+            structures.push(traverseStructure(data.bd.structureToDiagrams, data.bd.diagramToStructures, structureUID, { top: 0, left: 0 }));
+        });
+    }
+
+    let $bdContainer = document.getElementById("bd-container");
+    if (data.bd.image === "") {
+        let output = `<div class="empty-msg">Block Diagram is empty</div>`;
+        $bdContainer.innerHTML = output;
+
+    } else {
+        let bgLeft = data.bd.position.left;
+        let bgTop = data.bd.position.top;
+        let bgWidth = data.bd.bounds.width;
+        let bgHeight = data.bd.bounds.height;
+        const bdStyle = {
+            left: bgLeft + "px",
+            top: bgTop + "px",
+            width: bgWidth + "px",
+            height: bgHeight + "px",
+            background: `url(${data.bd.image})`,
+        };
+        let output = `<div style="${inlineStyleDict(bdStyle)}"></div>` + printStructures(structures);
+        document.getElementById("top-level-diagram").innerHTML = output;
+        if (bgLeft < 0) {
+            $bdContainer.style.left = (bgLeft * -1) + "px";
+        }
+        if (bgTop < 0) {
+            $bdContainer.style.top = (bgTop * -1) + "px";
+        }
+    }
+}
+
+document.querySelectorAll(".structure").forEach(structureElem => {
+    structureElem.addEventListener("click", (event) => {
+        event.stopPropagation();
+        let diagrams = parseInt(structureElem.getAttribute("data-diagrams"));
+        let oldIndex = parseInt(structureElem.getAttribute("data-index"));
+        let newIndex = (oldIndex + 1) % diagrams;
+        structureElem.children[oldIndex].classList.remove("visible");
+        structureElem.children[newIndex].classList.add("visible");
+        structureElem.setAttribute("data-index", newIndex);
+    });
+});
+
+let $viInfoContainer = document.getElementById("vi-info-container");
+
+document.title = data.metadata.name;
+let infoOutput = `<h2>${data.metadata.name}</h2>`;
+if (data.metadata.image !== "") {
+    infoOutput += `<img src="${data.metadata.image}">`;
+}
+infoOutput += `<h3>Description</h3>`;
+infoOutput += `<p>"${data.metadata.description.replace(/(\r\n|\n)/g, "<br />")}"</p>`;
+$viInfoContainer.innerHTML = infoOutput;
+
+let $tabContainer = document.getElementById("tab-container");
+document.querySelectorAll("#switcher button").forEach($btn => {
+    let tabSelect = $btn.getAttribute("data-tab-select");
+    if (data.options.disabledTabs.includes(tabSelect)) {
+        $btn.setAttribute("disabled", true);
+    }
+    $btn.addEventListener("click", () => {
+        $tabContainer.setAttribute("data-tab", tabSelect);
+        setBodyBgColor(tabSelect, data);
+    });
+});
+
+let defaultTab = data.options.defaultTab;
+if (data.options.disabledTabs.includes(defaultTab)) {
+    defaultTab = "Info";
+}
+setBodyBgColor(defaultTab, data);
+$tabContainer.setAttribute("data-tab", defaultTab);
+</script>
+</body>
+
+</html>
